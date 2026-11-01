@@ -155,7 +155,7 @@ def test_quantity_is_optional(client):
     assert clients.add_holding(client.client_id, sample, None).holdings[0].quantity is None
 
 
-@pytest.mark.parametrize("quantity", [0, -1, -0.5])
+@pytest.mark.parametrize("quantity", [0, -1, -0.5, float("nan"), float("inf")])
 def test_non_positive_quantity_is_rejected(client, quantity):
     with pytest.raises(InputError):
         clients.add_holding(client.client_id, config.SUPPORTED_TICKERS[0], quantity)
