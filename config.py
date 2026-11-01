@@ -21,7 +21,7 @@ RESULTS_DIR = ROOT / "results"
 # Dates
 HISTORY_START = date(2022, 1, 1)  # prices are pulled from here onwards for model fitting
 EVENT_WINDOW_START = date(2025, 11, 1)
-EVENT_WINDOW_END = date(2026, 10, 15)
+EVENT_WINDOW_END = date(2026, 10, 27)
 SPLIT_CUTOFF = date(2026, 5, 1)  # first_trading_day < cutoff -> dev; >= cutoff -> test
 MIN_HISTORY_DAYS = 500  # roughly two years of trading days
 EVENT_MATCH_DAYS = 1  # a flag within first trading day + 1 day counts as a hit
