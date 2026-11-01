@@ -26,7 +26,31 @@ SPLIT_CUTOFF = date(2026, 5, 1)  # first_trading_day < cutoff -> dev; >= cutoff 
 MIN_HISTORY_DAYS = 500  # roughly two years of trading days
 EVENT_MATCH_DAYS = 1  # a flag within first trading day + 1 day counts as a hit
 
-# Stock pool (PLACEHOLDER: to be finished)
+# Price data
+PRICE_DATA_END = date(2026, 10, 30)  # last trading day in the cached snapshot
+FEATURE_WINDOW = 20  # trading days used for rolling features
+FETCH_RETRIES = 3
+FETCH_BACKOFF_SECONDS = 2.0
+MAX_GAP_DAYS = 10  # calendar days between trading days before we flag a gap
+MAX_ZERO_VOLUME_SHARE = 0.02
+MAX_STALE_DAYS = 30  # data ending this long before PRICE_DATA_END looks delisted
+
+# Events file
+EVENT_CATEGORIES = (
+    "Earnings surprise",
+    "Management change",
+    "Regulatory or legal",
+    "Product or clinical news",
+    "M&A or major corporate action",
+    "Operational incident",
+    "Sector or industry shock",
+    "Market-wide shock",
+)
+MARKET_WIDE_CATEGORY = "Market-wide shock"
+EVENT_TIMINGS = ("pre_market", "intraday", "after_close")
+EVENT_SOURCE_TYPES = ("primary", "secondary")
+
+# Stock pool (Up to date - 1/11/2026)
 _POOL_ROWS: list[tuple[str, str, str, str]] = [
     # (ticker, company, sector, tier)
     ("KO", "The Coca-Cola Company", "Consumer staples", "calm"),

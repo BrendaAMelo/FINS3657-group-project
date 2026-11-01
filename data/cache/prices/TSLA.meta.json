@@ -1,0 +1,8 @@
+{
+  "ticker": "TSLA",
+  "source": "yfinance (auto_adjust=True)",
+  "retrieved_at": "2026-11-01T07:02:59+00:00",
+  "start": "2022-01-01",
+  "end": "2026-10-30",
+  "rows": 1212
+}
