@@ -19,9 +19,7 @@ DB_PATH = DATA_DIR / "app.db"
 RESULTS_DIR = ROOT / "results"
 
 # Dates
-HISTORY_START = date(
-    2022, 1, 1
-)  # prices are pulled from here onwards for model fitting
+HISTORY_START = date(2022, 1, 1)  # prices are pulled from here onwards for model fitting
 EVENT_WINDOW_START = date(2025, 11, 1)
 EVENT_WINDOW_END = date(2026, 10, 15)
 SPLIT_CUTOFF = date(2026, 5, 1)  # first_trading_day < cutoff -> dev; >= cutoff -> test
@@ -71,5 +69,5 @@ def get_secret(name: str, default: str | None = None) -> str | None:
         import streamlit as st
 
         return st.secrets.get(name, default)
-    except Exception: #noqa: BLE001
+    except Exception:  # noqa: BLE001
         return default

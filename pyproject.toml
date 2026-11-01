@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 150
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]   # allow assert in tests
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
