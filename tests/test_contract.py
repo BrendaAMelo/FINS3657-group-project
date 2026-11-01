@@ -25,7 +25,7 @@ FORBIDDEN_ADVICE = re.compile(
 
 @pytest.fixture
 def client():
-    """A fresh client with no holdings, so tests never depend on each other."""
+    # A fresh client with no holdings, so tests never depend on each other.
     return clients.add_client("Test client", "balanced")
 
 
@@ -44,6 +44,11 @@ def _assert_valid_alert(alert: Alert, owner_id: int) -> None:
     for source in alert.sources:
         assert source.title.strip()
         assert source.url.startswith(("http://", "https://"))
+
+
+def test_event_window_ends_before_the_price_snapshot_with_room_for_followup():
+    assert config.EVENT_WINDOW_START < config.EVENT_WINDOW_END
+    assert (config.PRICE_DATA_END - config.EVENT_WINDOW_END).days >= 3
 
 
 # validate_ticker
