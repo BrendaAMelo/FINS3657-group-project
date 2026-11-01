@@ -1,5 +1,7 @@
-"""Contract tests: what the UI is allowed to rely on from services.clients and services.alerts.
-These pass against the dummy in-memory services and must keep passing when the real implementations (SQLite, models, news) replace them."""
+# Contract tests: what the UI is allowed to rely on from services.clients and services.alerts.
+
+# These pass against the dummy in-memory services and must keep passing when
+# the real implementations (SQLite, models, news) replace them.
 
 import dataclasses
 import re
@@ -263,3 +265,14 @@ def test_alerts_are_immutable():
     alert = alerts.get_alerts(cid)[0]
     with pytest.raises(dataclasses.FrozenInstanceError):
         alert.severity = "low"
+
+
+# get_secrets
+def test_get_secret_prefers_environment(monkeypatch):
+    monkeypatch.setenv("SOME_KEY", "from-env")
+    assert config.get_secret("SOME_KEY") == "from-env"
+
+
+def test_get_secret_falls_back_to_default(monkeypatch):
+    monkeypatch.delenv("MISSING_KEY", raising=False)
+    assert config.get_secret("MISSING_KEY", "fallback") == "fallback"

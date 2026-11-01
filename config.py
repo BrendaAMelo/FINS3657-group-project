@@ -50,10 +50,13 @@ _POOL_ROWS: list[tuple[str, str, str, str]] = [
     ("NFLX", "Netflix", "Communication services", "volatile"),
     ("BA", "Boeing", "Industrials", "volatile"),
 ]
-STOCK_POOL: dict[str, dict[str, str]] = {ticker: {"company": company, "sector": sector, "tier": tier} for ticker, company, sector, tier in _POOL_ROWS}
+STOCK_POOL: dict[str, dict[str, str]] = {
+    ticker: {"company": company, "sector": sector, "tier": tier} for ticker, company, sector, tier in _POOL_ROWS
+}
 SUPPORTED_TICKERS: tuple[str, ...] = tuple(sorted(STOCK_POOL))
 TICKERS_BY_TIER: dict[str, tuple[str, ...]] = {
-    tier: tuple(t for t, info in STOCK_POOL.items() if info["tier"] == tier) for tier in ("calm", "balanced", "volatile")
+    tier: tuple(t for t, info in STOCK_POOL.items() if info["tier"] == tier)
+    for tier in ("calm", "balanced", "volatile")
 }
 
 # Detectors
@@ -77,7 +80,10 @@ def get_secret(name: str, default: str | None = None) -> str | None:
         return value
     try:
         import streamlit as st
-
+        from streamlit.errors import StreamlitSecretNotFoundError
+    except ImportError:
+        return default
+    try:
         return st.secrets.get(name, default)
-    except Exception:  # noqa: BLE001
+    except (FileNotFoundError, StreamlitSecretNotFoundError):
         return default
