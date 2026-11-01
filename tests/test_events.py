@@ -226,3 +226,59 @@ def test_quota_warnings_name_what_is_missing(tmp_path):
     assert "only 1 events" in text
     assert "dev events" in text and "test events" in text
     assert "calm-tier" in text and "categories" in text
+
+
+def test_trading_day_check_accepts_consistent_dates(tmp_path, monkeypatch, make_prices):
+    monkeypatch.setattr(ev, "load_prices", lambda ticker, validate=False: make_prices())
+    rows = [
+        valid_row(
+            event_id="E001",
+            announcement_date="2026-10-14",
+            announcement_timing="after_close",
+            first_trading_day="2026-10-15",
+        ),
+        valid_row(
+            event_id="E002",
+            announcement_date="2026-10-14",
+            announcement_timing="intraday",
+            first_trading_day="2026-10-14",
+        ),
+        valid_row(  # a Saturday release is treated as the next trading day (Monday)
+            event_id="E003",
+            announcement_date="2026-10-17",
+            announcement_timing="intraday",
+            first_trading_day="2026-10-19",
+        ),
+    ]
+    df = ev.load_events(write_events(tmp_path, rows))
+    assert ev.check_trading_days(df) == []
+
+
+def test_trading_day_check_catches_wrong_first_day(tmp_path, monkeypatch, make_prices):
+    monkeypatch.setattr(ev, "load_prices", lambda ticker, validate=False: make_prices())
+    rows = [
+        valid_row(
+            event_id="E001",
+            announcement_date="2026-10-14",
+            announcement_timing="intraday",
+            first_trading_day="2026-10-15",
+        )
+    ]
+    df = ev.load_events(write_events(tmp_path, rows))
+    problems = ev.check_trading_days(df)
+    assert len(problems) == 1 and "should be 2026-10-14" in problems[0]
+
+
+def test_trading_day_check_catches_a_non_trading_day(tmp_path, monkeypatch, make_prices):
+    prices = make_prices().drop(pd.Timestamp("2026-10-14"))
+    monkeypatch.setattr(ev, "load_prices", lambda ticker, validate=False: prices)
+    rows = [
+        valid_row(
+            event_id="E001",
+            announcement_date="2026-10-14",
+            announcement_timing="intraday",
+            first_trading_day="2026-10-14",
+        )
+    ]
+    df = ev.load_events(write_events(tmp_path, rows))
+    assert "not a trading day" in ev.check_trading_days(df)[0]

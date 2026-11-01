@@ -7,6 +7,7 @@ import pandas as pd
 
 import config
 from data.errors import DataError, DataQualityError, DataUnavailableError
+from data.fetch import load_prices  # add to the imports at the top
 
 REQUIRED_COLUMNS = [
     "event_id",
@@ -175,6 +176,34 @@ def quota_warnings(events: pd.DataFrame) -> list[str]:
     return warnings
 
 
+def check_trading_days(events: pd.DataFrame) -> list[str]:
+    # Compare each event's dates with the real trading calendar in the cached prices.
+    problems: list[str] = []
+    calendars: dict[str, pd.DatetimeIndex] = {}
+    for _, row in events.iterrows():
+        ticker = row["ticker"]
+        if ticker not in calendars:
+            calendars[ticker] = pd.DatetimeIndex(load_prices(ticker, validate=False).index)
+        days = calendars[ticker]
+        announced, first = row["announcement_date"], row["first_trading_day"]
+        label = row["event_id"]
+        if first not in days:
+            problems.append(f"{label}: {first.date()} is not a trading day for {ticker} (holiday?)")
+            continue
+        same_day = row["announcement_timing"] in ("pre_market", "intraday") and announced in days
+        later = days[days > announced]
+        expected = announced if same_day else (later[0] if len(later) else None)
+        if expected is None:
+            problems.append(f"{label}: no trading day after {announced.date()} in the price data")
+        elif first != expected:
+            problems.append(
+                f"{label}: first_trading_day should be {expected.date()} for a "
+                f"{row['announcement_timing']} announcement on {announced.date()}, "
+                f"not {first.date()}"
+            )
+    return problems
+
+
 def main() -> int:
     # Print a quick summary of the events file: python -m data.events
     try:
@@ -187,6 +216,8 @@ def main() -> int:
     print(events.groupby("tier")["event_id"].count().to_string())
     for warning in quota_warnings(events):
         print("WARNING:", warning)
+    for problem in check_trading_days(events):
+        print("WARNING:", problem)
     return 0
 
 
