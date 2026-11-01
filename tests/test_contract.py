@@ -55,6 +55,15 @@ def test_ticker_is_trimmed_and_uppercased():
     assert clients.validate_ticker(f"  {sample.lower()} ") == sample
 
 
+def test_stock_pool_is_well_formed():
+    assert len(config.STOCK_POOL) >= 15
+    for ticker, info in config.STOCK_POOL.items():
+        assert ticker == ticker.upper()
+        assert set(info) == {"company", "sector", "tier"}
+        assert info["tier"] in {"calm", "balanced", "volatile"}
+    assert all(config.TICKERS_BY_TIER[t] for t in ("calm", "balanced", "volatile"))
+
+
 @pytest.mark.parametrize(
     "bad",
     [None, "", "   ", "123", "KO1", "K O", "KO; DROP TABLE clients", "TOOLONGTICKER"],
