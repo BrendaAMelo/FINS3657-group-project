@@ -2,6 +2,16 @@ import numpy as np
 import pandas as pd
 import pytest
 
+import config
+from services import clients
+
+
+@pytest.fixture(autouse=True)
+def temp_db(tmp_path, monkeypatch):
+    # Give every test its own empty database, seeded with the demo clients.
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "test.db")
+    clients.ensure_ready()
+
 
 @pytest.fixture
 def make_prices():
