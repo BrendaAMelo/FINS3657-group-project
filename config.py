@@ -27,24 +27,37 @@ MIN_HISTORY_DAYS = 500  # roughly two years of trading days
 EVENT_MATCH_DAYS = 1  # a flag within first trading day + 1 day counts as a hit
 
 # Stock pool (PLACEHOLDER: to be finished)
+_POOL_ROWS: list[tuple[str, str, str, str]] = [
+    # (ticker, company, sector, tier)
+    ("KO", "The Coca-Cola Company", "Consumer staples", "calm"),
+    ("PG", "Procter & Gamble", "Consumer staples", "calm"),
+    ("JNJ", "Johnson & Johnson", "Health care", "calm"),
+    ("WMT", "Walmart", "Consumer staples", "calm"),
+    ("PEP", "PepsiCo", "Consumer staples", "calm"),
+    ("AAPL", "Apple", "Technology", "balanced"),
+    ("MSFT", "Microsoft", "Technology", "balanced"),
+    ("JPM", "JPMorgan Chase", "Financials", "balanced"),
+    ("XOM", "Exxon Mobil", "Energy", "balanced"),
+    ("DIS", "The Walt Disney Company", "Communication services", "balanced"),
+    ("V", "Visa", "Financials", "balanced"),
+    ("META", "Meta Platforms", "Communication services", "balanced"),
+    ("TSLA", "Tesla", "Consumer discretionary", "volatile"),
+    ("NVDA", "NVIDIA", "Technology", "volatile"),
+    ("CRWD", "CrowdStrike", "Technology", "volatile"),
+    ("INTC", "Intel", "Technology", "volatile"),
+    ("UNH", "UnitedHealth Group", "Health care", "volatile"),
+    ("LLY", "Eli Lilly", "Health care", "volatile"),
+    ("NFLX", "Netflix", "Communication services", "volatile"),
+    ("BA", "Boeing", "Industrials", "volatile"),
+]
 STOCK_POOL: dict[str, dict[str, str]] = {
-    "KO": {
-        "company": "The Coca-Cola Company",
-        "sector": "Consumer staples",
-        "tier": "calm",
-    },
-    "JNJ": {"company": "Johnson & Johnson", "sector": "Health care", "tier": "calm"},
-    "PG": {"company": "Procter & Gamble", "sector": "Consumer staples", "tier": "calm"},
-    "JPM": {"company": "JPMorgan Chase", "sector": "Financials", "tier": "balanced"},
-    "MSFT": {"company": "Microsoft", "sector": "Technology", "tier": "balanced"},
-    "NVDA": {"company": "NVIDIA", "sector": "Technology", "tier": "volatile"},
-    "TSLA": {
-        "company": "Tesla",
-        "sector": "Consumer discretionary",
-        "tier": "volatile",
-    },
+    ticker: {"company": company, "sector": sector, "tier": tier} for ticker, company, sector, tier in _POOL_ROWS
 }
 SUPPORTED_TICKERS: tuple[str, ...] = tuple(sorted(STOCK_POOL))
+TICKERS_BY_TIER: dict[str, tuple[str, ...]] = {
+    tier: tuple(t for t, info in STOCK_POOL.items() if info["tier"] == tier)
+    for tier in ("calm", "balanced", "volatile")
+}
 
 # Detectors
 FIXED_THRESHOLD_PCT = 0.05  # baseline 1: flag if |daily return| > 5%
@@ -67,7 +80,10 @@ def get_secret(name: str, default: str | None = None) -> str | None:
         return value
     try:
         import streamlit as st
-
+        from streamlit.errors import StreamlitSecretNotFoundError
+    except ImportError:
+        return default
+    try:
         return st.secrets.get(name, default)
-    except Exception:  # noqa: BLE001
+    except (FileNotFoundError, StreamlitSecretNotFoundError):
         return default

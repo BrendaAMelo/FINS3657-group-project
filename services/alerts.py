@@ -27,7 +27,11 @@ def get_alerts(client_id: int) -> list[Alert]:
                 detector="dummy",
                 score=round(0.9 - 0.2 * i, 2),
                 summary=f"[FAKE] {holding.ticker} moved more than usual compared with its own history.",
-                explanation=("[FAKE] Example explanation based on retrieved articles." if has_news else "No clear news found for this move."),
+                explanation=(
+                    "[FAKE] Example explanation based on retrieved articles."
+                    if has_news
+                    else "No clear news found for this move."
+                ),
                 explanation_status="ok" if has_news else "no_news",
                 sources=(Source(title="Example source", url="https://example.com"),) if has_news else (),
             )
