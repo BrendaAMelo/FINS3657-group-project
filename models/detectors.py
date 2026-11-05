@@ -68,6 +68,7 @@ def isolation_forest(
     train_before: str | pd.Timestamp,
     profiles: tuple[str, ...] = tuple(config.PROFILES),
     random_state: int = 42,
+    allow_insufficient_history: bool = False,
 ) -> tuple[dict[str, pd.DataFrame], dict]:
     """Fit per ticker on early history; calibrate quantiles on later pre-evaluation history."""
     _validate(prices)
@@ -79,6 +80,13 @@ def isolation_forest(
     n_fit = int(len(history) * 0.8)
     fit, calibration = history.iloc[:n_fit], history.iloc[n_fit:]
     if len(fit) < 100 or len(calibration) < 30:
+        if allow_insufficient_history:
+            empty = pd.Series(np.nan, index=prices.index, dtype=float)
+            return {p: _result(empty, np.nan) for p in profiles}, {
+                "status": "insufficient_history",
+                "fit_rows": len(fit),
+                "calibration_rows": len(calibration),
+            }
         raise ValueError("Isolation Forest needs at least 150 usable feature days before evaluation.")
     forest = IsolationForest(
         n_estimators=200, max_samples="auto", contamination="auto", random_state=random_state, n_jobs=1
@@ -118,12 +126,15 @@ def run_models(
     start=config.EVENT_WINDOW_START,
     end=config.PRICE_DATA_END,
     profiles: tuple[str, ...] = tuple(config.PROFILES),
+    allow_insufficient_history: bool = False,
 ) -> tuple[pd.DataFrame, dict]:
     """One row per trading date, model and profile, including unscored rows."""
     start, end = pd.Timestamp(start), pd.Timestamp(end)
     if start > end:
         raise ValueError("Start must be on or before end.")
-    forests, metadata = isolation_forest(prices, train_before=start, profiles=profiles)
+    forests, metadata = isolation_forest(
+        prices, train_before=start, profiles=profiles, allow_insufficient_history=allow_insufficient_history
+    )
     fixed = fixed_threshold(prices)
     rows = []
     for profile in profiles:
@@ -137,6 +148,18 @@ def run_models(
             frame.index.name = "date"
             frame["ticker"], frame["model"], frame["profile"] = ticker, name, profile
             frame["daily_return"] = prices.Close.pct_change(fill_method=None).reindex(frame.index)
+            frame["close_price"] = prices.Close.reindex(frame.index)
             rows.append(frame.reset_index())
-    columns = ["date", "ticker", "model", "profile", "daily_return", "score", "threshold", "is_anomaly", "is_scored"]
+    columns = [
+        "date",
+        "ticker",
+        "model",
+        "profile",
+        "close_price",
+        "daily_return",
+        "score",
+        "threshold",
+        "is_anomaly",
+        "is_scored",
+    ]
     return pd.concat(rows, ignore_index=True)[columns], metadata

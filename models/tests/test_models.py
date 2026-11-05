@@ -99,3 +99,14 @@ def test_output_contract_and_profile_independent_baseline():
     assert not result.duplicated(["date", "ticker", "model", "profile"]).any()
     fixed = result.loc[result.model == "fixed_threshold"]
     assert fixed.groupby("date").score.nunique().eq(1).all()
+
+
+def test_insufficient_forest_history_is_reported_without_blocking_baselines():
+    prices = random_prices(100)
+    result, metadata = run_models(
+        prices, "KO", start=prices.index[70], end=prices.index[-1], allow_insufficient_history=True
+    )
+    assert metadata["status"] == "insufficient_history"
+    assert not result.loc[result.model == "isolation_forest", "is_scored"].any()
+    assert result.loc[result.model == "fixed_threshold", "is_scored"].all()
+    assert result.close_price.notna().all()
