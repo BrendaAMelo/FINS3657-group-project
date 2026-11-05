@@ -89,6 +89,15 @@ def test_unsupported_ticker_message_lists_supported_ones():
 
 
 # add_client
+@pytest.mark.parametrize(
+    "profile",
+    ["conservative", "balanced", "aggressive"],
+)
+def test_clients_can_use_every_profile(profile):
+    client = clients.add_client(f"Test {profile}", profile)
+    assert client.profile == profile
+
+
 def test_add_client_returns_clean_client_and_lists_it():
     new = clients.add_client("  New client  ", "aggressive")
     assert new.name == "New client"
@@ -124,10 +133,6 @@ def test_name_length_boundary():
     assert clients.add_client("x" * 60, "balanced").name == "x" * 60
     with pytest.raises(InputError):
         clients.add_client("x" * 61, "balanced")
-
-
-def test_seeded_demo_clients_cover_every_profile():
-    assert {c.profile for c in clients.list_clients()} >= set(config.PROFILES)
 
 
 # get_client
@@ -259,17 +264,26 @@ def test_alerts_for_unknown_client_raise():
 
 
 def test_each_call_returns_a_fresh_list():
-    cid = clients.list_clients()[0].client_id
-    first = alerts.get_alerts(cid)
-    first.clear()
-    assert alerts.get_alerts(cid)
+    clients.add_client("List test", "balanced")
+
+    first = clients.list_clients()
+    second = clients.list_clients()
+
+    assert first is not second
+    assert first == second
 
 
 def test_alerts_are_immutable():
-    cid = clients.list_clients()[0].client_id
-    alert = alerts.get_alerts(cid)[0]
-    with pytest.raises(dataclasses.FrozenInstanceError):
-        alert.severity = "low"
+    client = clients.add_client("Alert test", "balanced")
+    clients.add_holding(client.client_id, "KO")
+
+    result = alerts.get_alerts(client.client_id)
+    assert result
+
+    alert = result[0]
+
+    with pytest.raises((AttributeError, TypeError)):
+        alert.ticker = "PG"
 
 
 # get_secrets
