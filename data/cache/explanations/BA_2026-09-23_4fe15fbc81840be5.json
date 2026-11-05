@@ -1,0 +1,37 @@
+{
+  "ticker": "BA",
+  "date": "2026-09-23",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Boeing shares traded higher due to progress and a recommendation on a labor agreement from its union, alongside fresh commercial orders including deals with Turkish Airlines and Korean Air.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Boeing Stock Rises Wednesday Following Labor Deal Recommendation, New Orders",
+      "url": "https://finnhub.io/api/news?id=fe305c4bf9bfd6036349a6129ad4129b9150e59105a3ef17bc2088d864af23e2",
+      "published": "2026-09-23"
+    },
+    {
+      "title": "Boeing and Turkish Airlines Finalize Order for up to 150 737 MAX Jets",
+      "url": "https://finnhub.io/api/news?id=4c65c94c3eca68f44a1288fe2cf542d976b61bf9eee17cef9f3fdde16cbb919f",
+      "published": "2026-09-23"
+    },
+    {
+      "title": "Boeing Union Tells Members To Vote For Latest Contract; Stock Rises",
+      "url": "https://finnhub.io/api/news?id=58fcf7f656b256c2200bb7048346d8e9d5c1d6bf8509bdb850af617cdec314d7",
+      "published": "2026-09-23"
+    },
+    {
+      "title": "Is Boeing (BA) Expensive As Korean Air\u2019s 103 Jet Order Lifts Its Backlog?",
+      "url": "https://finnhub.io/api/news?id=dac315c48ea2454ec6b6c56510ceeda3992a0ca571eedfc0df6ec75cd2913aea",
+      "published": "2026-09-23"
+    },
+    {
+      "title": "BA Lands Turkish Airlines\u2019 737 MAX Deal For Up To 150 Jets \u2014 It\u2019s Boeing\u2019s Largest Single-Aisle Order From The Carrier",
+      "url": "https://finnhub.io/api/news?id=eef70b88e9403fed13e568008a7dded56733043c1f854ec62addc175b422ffe1",
+      "published": "2026-09-23"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:09+00:00"
+}

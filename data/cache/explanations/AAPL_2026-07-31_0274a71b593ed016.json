@@ -1,0 +1,27 @@
+{
+  "ticker": "AAPL",
+  "date": "2026-07-31",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Apple reported record June quarter revenue that beat estimates, but shares fell due to a weaker-than-expected September-quarter outlook, supply constraints, memory cost inflation, and a demand forecast issue causing supply bottlenecks.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Apple Inc (AAPL) (Q3 2026) Earnings Call Highlights: Record Revenue Amid Supply Constraints and ...",
+      "url": "https://finnhub.io/api/news?id=376b156d344584d483f87e47075e53db73c3086afb9e45303ac5145d0a124e28",
+      "published": "2026-07-31"
+    },
+    {
+      "title": "Apple Underestimated Its Own Customers: AAPL CEO Tim Cook Blames 'Demand Forecast Issue' for Q4 Supply Bottlenecks",
+      "url": "https://finnhub.io/api/news?id=47da382af34c4071d902afea07aa448d0756b10f9244e5256c12a56d3deabbd2",
+      "published": "2026-07-31"
+    },
+    {
+      "title": "Why Apple (AAPL) Shares Are Trading Lower Today",
+      "url": "https://finnhub.io/api/news?id=220280036dc3654c178cb6ac9437d84ee9d2e157015bb3865cef310c82ddb91c",
+      "published": "2026-07-31"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:17+00:00"
+}

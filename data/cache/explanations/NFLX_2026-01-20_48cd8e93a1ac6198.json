@@ -1,0 +1,27 @@
+{
+  "ticker": "NFLX",
+  "date": "2026-01-20",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Netflix reported its fourth-quarter 2025 earnings and held its earnings call on January 20. Although sales exceeded Wall Street's target and subscribers surpassed 325 million alongside a Warner Bros. acquisition announcement, management acknowledged that increased content spending and integration costs could pressure margins.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Netflix, Inc. (NFLX) Q4 2025 Earnings Call Transcript",
+      "url": "https://finnhub.io/api/news?id=95bc5836dad5f60a5b12920921a9269a7681d1571607e91a0ef80007261f0bc4",
+      "published": "2026-01-20"
+    },
+    {
+      "title": "Netflix Inc (NFLX) Q4 2025 Earnings Call Highlights: Strong Revenue Growth and Strategic ...",
+      "url": "https://finnhub.io/api/news?id=2908357acc62c0c4d8f47ca1f0e87c39254d6602d9378e26fb1c5e0c66834a19",
+      "published": "2026-01-21"
+    },
+    {
+      "title": "Why Netflix (NFLX) Stock Is Falling Today",
+      "url": "https://finnhub.io/api/news?id=974f5c32ddc9d3b232c3d6443fca52894bcbd9898d90204dfd8207e45427f69b",
+      "published": "2026-01-21"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:18+00:00"
+}

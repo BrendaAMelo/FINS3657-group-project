@@ -1,0 +1,22 @@
+{
+  "ticker": "WMT",
+  "date": "2026-01-16",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Walmart announced leadership changes, including new members elected to its Executive Council and upcoming C-suite transitions as incoming CEO John Furner prepares to take the helm.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Walmart Announces Leadership Changes",
+      "url": "https://finnhub.io/api/news?id=c1732ebca7709b04e38189bd0001c0668e64bb72bee7b0ca05e2cf73f34ad6a3",
+      "published": "2026-01-16"
+    },
+    {
+      "title": "Walmart shakes up C-suite as new CEO readies to take the helm",
+      "url": "https://finnhub.io/api/news?id=2b1748623b356664076e05733ad1dddad9552bbed08ee5d73f46d28a5f07706b",
+      "published": "2026-01-16"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:54+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "ticker": "META",
+  "date": "2026-01-29",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Meta Platforms experienced unusual movement following its fourth-quarter earnings results, which featured strong revenue growth and topped Wall Street estimates. Investors were also encouraged by analyst price target upgrades and an investment firm's upgrade following the report.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Meta Platforms Inc (META) Q4 2025 Earnings Call Highlights: Strong Revenue Growth Amidst Rising ...",
+      "url": "https://finnhub.io/api/news?id=d291d6911fb8e07fd8abe38b681c42a7017a5375e836b869b7d09af9b5b81fb4",
+      "published": "2026-01-29"
+    },
+    {
+      "title": "Meta Platforms (META) Soars 10.4% on PT Upgrade, Earnings Result",
+      "url": "https://finnhub.io/api/news?id=82190cee56ee45ef7fc094140644f93beb488207518a9f6776ddc481d3449040",
+      "published": "2026-01-29"
+    },
+    {
+      "title": "Cantor Fitzgerald Hikes Price Target on Meta Platforms, Inc. (META) to $860, Maintains Overweight Rating",
+      "url": "https://finnhub.io/api/news?id=212d429f1464117833e167f3c7d4282238a4e80c0ec8d71f6b70eded0a95603d",
+      "published": "2026-02-01"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:37+00:00"
+}
