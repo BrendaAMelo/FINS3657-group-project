@@ -10,27 +10,10 @@ import config
 from data import db
 from services.contracts import Client, Holding, InputError
 
-# Fictional demo clients, seeded when the database is empty. KO is held by all three.
-DEMO_CLIENTS = [
-    ("Demo client A", "conservative", ["KO", "PG", "JNJ", "WMT", "PEP"]),
-    ("Demo client B", "balanced", ["KO", "AAPL", "JPM", "XOM", "V"]),
-    ("Demo client C", "aggressive", ["KO", "NVDA", "TSLA", "CRWD", "NFLX"]),
-]
-
 
 def ensure_ready() -> None:
-    """Create the tables if needed and seed the demo clients if there are none."""
+    """Initialise the database without automatically creating clients."""
     db.init_db()
-    with closing(db.connect()) as conn:
-        if conn.execute("SELECT COUNT(*) FROM clients").fetchone()[0] > 0:
-            return
-        for name, profile, tickers in DEMO_CLIENTS:
-            cur = conn.execute("INSERT INTO clients (name, profile) VALUES (?, ?)", (name, profile))
-            conn.executemany(
-                "INSERT INTO holdings (client_id, ticker, quantity) VALUES (?, ?, NULL)",
-                [(cur.lastrowid, ticker) for ticker in tickers],
-            )
-        conn.commit()
 
 
 def _open() -> sqlite3.Connection:
@@ -112,3 +95,145 @@ def add_holding(client_id: int, ticker: str, quantity: float | None = None) -> C
         except sqlite3.IntegrityError:
             raise InputError(f"{ticker} is already in this client's holdings.") from None
     return get_client(client_id)
+
+
+def remove_holding(client_id: int, ticker: str) -> Client:
+    get_client(client_id)  # raises InputError if the client doesn't exist
+    ticker = validate_ticker(ticker)
+    with closing(_open()) as conn:
+        cur = conn.execute("DELETE FROM holdings WHERE client_id = ? AND ticker = ?", (client_id, ticker))
+        conn.commit()
+        removed = cur.rowcount
+    if removed == 0:
+        raise InputError(f"{ticker} is not in this client's holdings.")
+    return get_client(client_id)
+
+
+def delete_client(client_id: int) -> None:
+    get_client(client_id)
+
+    with closing(_open()) as conn:
+        _ensure_alert_reviews(conn)
+
+        conn.execute(
+            "DELETE FROM alert_reviews WHERE client_id = ?",
+            (client_id,),
+        )
+        conn.execute(
+            "DELETE FROM clients WHERE id = ?",
+            (client_id,),
+        )
+        conn.commit()
+
+
+def set_profile(client_id: int, profile: str) -> Client:
+    get_client(client_id)
+    if profile not in config.PROFILES:
+        raise InputError(f"Risk profile must be one of: {', '.join(config.PROFILES)}.")
+    with closing(_open()) as conn:
+        conn.execute("UPDATE clients SET profile = ? WHERE id = ?", (profile, client_id))
+        conn.commit()
+    return get_client(client_id)
+
+
+def set_sensitivity_override(client_id: int, value: float | None) -> Client:
+    get_client(client_id)
+    if value is not None and not (math.isfinite(value) and config.OVERRIDE_MIN <= value <= config.OVERRIDE_MAX):
+        raise InputError(f"Sensitivity must be between {config.OVERRIDE_MIN} and {config.OVERRIDE_MAX}.")
+    with closing(_open()) as conn:
+        conn.execute("UPDATE clients SET sensitivity_override = ? WHERE id = ?", (value, client_id))
+        conn.commit()
+    return get_client(client_id)
+
+
+def add_holdings(
+    client_id: int,
+    tickers: list[str],
+) -> tuple[Client, list[str], list[tuple[str, str]]]:
+    # Add multiple holdings, returning the updated client, successes and failures.
+    get_client(client_id)
+
+    added: list[str] = []
+    skipped: list[tuple[str, str]] = []
+
+    # Validate and insert each ticker independently. One duplicate or invalid
+    # ticker should not prevent the remaining valid tickers being added.
+    for raw_ticker in dict.fromkeys(tickers):
+        try:
+            ticker = validate_ticker(raw_ticker)
+            add_holding(client_id, ticker)
+        except InputError as err:
+            skipped.append((str(raw_ticker).strip().upper(), str(err)))
+        else:
+            added.append(ticker)
+
+    return get_client(client_id), added, skipped
+
+
+def _ensure_alert_reviews(conn) -> None:
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS alert_reviews (
+            client_id INTEGER NOT NULL,
+            ticker TEXT NOT NULL,
+            alert_date TEXT NOT NULL,
+            detector TEXT NOT NULL,
+            status TEXT NOT NULL
+                CHECK (status IN ('Unreviewed', 'Reviewed', 'Follow-up required')),
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (client_id, ticker, alert_date, detector)
+        )
+        """
+    )
+
+
+def get_alert_reviews(client_id: int) -> dict[tuple[str, str, str], str]:
+    # Return saved review statuses keyed by ticker, alert date and detector.
+    get_client(client_id)
+
+    with closing(_open()) as conn:
+        _ensure_alert_reviews(conn)
+        rows = conn.execute(
+            """
+            SELECT ticker, alert_date, detector, status
+            FROM alert_reviews
+            WHERE client_id = ?
+            """,
+            (client_id,),
+        ).fetchall()
+
+    return {(row["ticker"], row["alert_date"], row["detector"]): row["status"] for row in rows}
+
+
+def set_alert_review(
+    client_id: int,
+    ticker: str,
+    alert_date: str,
+    detector: str,
+    status: str,
+) -> None:
+    # Save a review status without changing the underlying alert.
+    get_client(client_id)
+
+    allowed = {"Unreviewed", "Reviewed", "Follow-up required"}
+    if status not in allowed:
+        raise InputError(f"Review status must be one of: {', '.join(sorted(allowed))}.")
+
+    ticker = validate_ticker(ticker)
+    alert_date = str(alert_date)
+
+    with closing(_open()) as conn:
+        _ensure_alert_reviews(conn)
+        conn.execute(
+            """
+            INSERT INTO alert_reviews
+                (client_id, ticker, alert_date, detector, status, updated_at)
+            VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(client_id, ticker, alert_date, detector)
+            DO UPDATE SET
+                status = excluded.status,
+                updated_at = CURRENT_TIMESTAMP
+            """,
+            (client_id, ticker, alert_date, detector, status),
+        )
+        conn.commit()
