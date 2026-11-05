@@ -1,0 +1,22 @@
+{
+  "ticker": "WMT",
+  "date": "2026-02-19",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Walmart reported Q4 CY2025 revenue that met expectations and profit above estimates, alongside lower-than-expected next-quarter revenue guidance [1]. Additionally, the company highlighted strong financial performance with growth in eCommerce and operating income [4].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Walmart (NASDAQ:WMT) Reports Q4 CY2025 In Line With Expectations",
+      "url": "https://finnhub.io/api/news?id=e66b2ecf4b7c8ff8f3c44bb11c079ef20ef572b558c9b47a3a6b4e18247bc496",
+      "published": "2026-02-19"
+    },
+    {
+      "title": "Walmart Inc (WMT) Q4 2026 Earnings Call Highlights: Robust Growth in eCommerce and Operating Income",
+      "url": "https://finnhub.io/api/news?id=01e5c2aebb553c368fa5797e20e0a48e0a9285d3db22761329e89fb6d798420f",
+      "published": "2026-02-19"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:19:06+00:00"
+}

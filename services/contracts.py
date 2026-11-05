@@ -23,6 +23,13 @@ class Source:
 
 
 @dataclass(frozen=True)
+class Explanation:
+    text: str
+    status: ExplanationStatus
+    sources: tuple[Source, ...] = ()
+
+
+@dataclass(frozen=True)
 class Alert:
     client_id: int
     ticker: str

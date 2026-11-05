@@ -1,0 +1,17 @@
+{
+  "ticker": "KO",
+  "date": "2025-12-10",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "The Coca-Cola Company announced a leadership transition naming Chief Operating Officer Henrique Braun to succeed James Quincey as CEO.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "The Coca-Cola Company Announces CEO Succession Plan; Chief Operating Officer Henrique Braun to Succeed James Quincey as CEO in 2026",
+      "url": "https://finnhub.io/api/news?id=197a6811c534590e251046f9ec708674aa01f51419dd486351c340248f9b0fd8",
+      "published": "2025-12-10"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:45+00:00"
+}

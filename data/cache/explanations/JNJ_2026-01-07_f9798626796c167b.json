@@ -1,0 +1,22 @@
+{
+  "ticker": "JNJ",
+  "date": "2026-01-07",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Barclays raised its price target on Johnson & Johnson due to strength in key drugs, following an analysis of sales and prescription data [1]. Additionally, positive topline Phase 2b results for nipocalimab in systemic lupus erythematosus were announced [8].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Barclays Raises Johnson & Johnson (JNJ) Target on Strength in Key Drugs",
+      "url": "https://finnhub.io/api/news?id=03cf73ce3b4cac8dc68d82c1e3eeab5742fb57e9432fb8add6fabd30d6b2bdf4",
+      "published": "2026-01-07"
+    },
+    {
+      "title": "Johnson & Johnson unveils new data showing nipocalimab is the first and only investigational FcRn blocker with potential to reduce systemic lupus erythematosus (SLE) activity in a Phase 2 study",
+      "url": "https://finnhub.io/api/news?id=35618bbddca324c9ab7a1c1a5b5a3801322a3d239aef02f01d90f21a37a863a6",
+      "published": "2026-01-06"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:57+00:00"
+}

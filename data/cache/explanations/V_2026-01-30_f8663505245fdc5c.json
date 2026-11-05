@@ -1,0 +1,27 @@
+{
+  "ticker": "V",
+  "date": "2026-01-30",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Visa reported its fiscal first-quarter earnings with strong revenue growth and resilient consumer spending, though shares declined early due to a fiscal second-quarter outlook implying a sequential step-down in revenue growth [1, 2, 4].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Visa Inc (V) Q1 2026 Earnings Call Highlights: Strong Revenue Growth and Strategic Expansions",
+      "url": "https://finnhub.io/api/news?id=47d1d7d249e994f100f5b2eabe3b2fb8886d0b369d0373d06ca0057ff3101128",
+      "published": "2026-01-30"
+    },
+    {
+      "title": "Visa Q1 Earnings Call Highlights",
+      "url": "https://finnhub.io/api/news?id=1f36ae2486d8f817ef5d4f5e2e6ef88816842db50eab4d041343bf344f433317",
+      "published": "2026-01-30"
+    },
+    {
+      "title": "Visa Sees Sequential 'Step-Down' in Revenue Growth; Beats Fiscal First-Quarter Estimates",
+      "url": "https://finnhub.io/api/news?id=2ebae2bebd0de2f4ce31dd96f0f0ffd101211421b8a2fead2fb1e403ae17a35a",
+      "published": "2026-01-30"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:39+00:00"
+}
