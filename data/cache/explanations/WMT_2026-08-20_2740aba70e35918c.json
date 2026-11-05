@@ -1,0 +1,22 @@
+{
+  "ticker": "WMT",
+  "date": "2026-08-20",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Walmart held its Q2 earnings call and reported quarterly earnings and sales that beat analyst estimates.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Walmart Inc. (WMT) Q2 2027 Earnings Call Transcript",
+      "url": "https://finnhub.io/api/news?id=90c8eba68739efdc1c5b65215cf47a1aa6dbc95bf6e7ae0bd48dc11eefc15230",
+      "published": "2026-08-20"
+    },
+    {
+      "title": "Walmart Q2 Adj. EPS $0.81 Beats $0.74 Estimate, Sales $187.937B Beat $186.794B Estimate",
+      "url": "https://finnhub.io/api/news?id=6ba774eb95cfeb0de7f86c0c1d9c012d4b7d50503bef613bdf1b38cafd8894ee",
+      "published": "2026-08-20"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:25+00:00"
+}

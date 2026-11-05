@@ -1,0 +1,27 @@
+{
+  "ticker": "NVDA",
+  "date": "2025-11-20",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Nvidia reported a record third-quarter earnings beat with bullish guidance and reaccelerating revenue growth, prompting top analysts to raise their price targets. These strong quarterly results and forecasts ignited a market rally and sent chip stocks soaring.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Evercore Lifts Nvidia (NVDA) Target, Says It Remains the \u2018AI Ecosystem of Choice\u2019",
+      "url": "https://finnhub.io/api/news?id=9bdb3d49bd21df43eb1272cf83792000401b8ffbf9be2971fa3ccc904b9f1e15",
+      "published": "2025-11-25"
+    },
+    {
+      "title": "NVDA: Top Analysts Hike Nvidia Price Targets After Record Quarter",
+      "url": "https://finnhub.io/api/news?id=eca76c73afd825d5da50280788cd5702a27db1df7d135860dc9ca6ddd2c4d087",
+      "published": "2025-11-20"
+    },
+    {
+      "title": "NVDA: Nvidia Sends Chip Stocks Soaring After Record Q3 Results",
+      "url": "https://finnhub.io/api/news?id=6d83fffaa54233f7277aeb8ba8959625a1436afb83047aacdc38e773fe891262",
+      "published": "2025-11-20"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:19:18+00:00"
+}

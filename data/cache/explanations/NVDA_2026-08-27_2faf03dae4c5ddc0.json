@@ -1,0 +1,27 @@
+{
+  "ticker": "NVDA",
+  "date": "2026-08-27",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Nvidia shares jumped following a blockbuster second-quarter earnings report that featured record revenue and strong guidance driven by robust AI demand, prompting bullish reactions from analysts and investors.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "NVIDIA Corp (NVDA) (Q2 2027) Earnings Call Highlights: Record Revenue of $96 Billion, Fiscal ...",
+      "url": "https://finnhub.io/api/news?id=9a026b7c95b88ae6cbe5a4fd44853bfef67f7a75e6f1b05c8ed46a860025ac46",
+      "published": "2026-08-27"
+    },
+    {
+      "title": "Jim Cramer Says Nvidia Is 'Not Going to Stop Here' as Ross Gerber Sees NVDA Stock Hitting $450 as Analysts Dissect Q2 Earnings",
+      "url": "https://finnhub.io/api/news?id=1c1eb52d79237b26874d76c7d4efce816a87adb1a4ece4c255204dd7cb3d2daf",
+      "published": "2026-08-27"
+    },
+    {
+      "title": "NVIDIA Is Still the AI Bellwether\u2014And Rivals Aren\u2019t Close",
+      "url": "https://finnhub.io/api/news?id=286b341a5fc1a0b7a06459aada1b5e6fbcc4fa44390ead54baa9bfc51e96ae9f",
+      "published": "2026-08-27"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:15+00:00"
+}

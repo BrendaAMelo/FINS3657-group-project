@@ -1,0 +1,17 @@
+{
+  "ticker": "PG",
+  "date": "2026-08-04",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Procter & Gamble announced an agreement to acquire supplements brand Thorne for $3.8 billion.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Procter & Gamble will acquire supplements brand Thorne for $3.8 billion, CEO tells CNBC",
+      "url": "https://finnhub.io/api/news?id=437d189eece5fab20c536cfda56da968f93b54dd36207c7a24d615993346cef3",
+      "published": "2026-08-04"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:53+00:00"
+}

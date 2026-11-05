@@ -1,0 +1,22 @@
+{
+  "ticker": "NVDA",
+  "date": "2026-02-26",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "NVIDIA shares traded lower as investors digested the company's fourth-quarter report following initial post-earnings gains [2]. The company reported record revenue driven by strong Data Center performance and strategic advancements in AI infrastructure [1].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "NVIDIA Corp (NVDA) Q4 2026 Earnings Call Highlights: Record Revenue and Strategic Innovations ...",
+      "url": "https://finnhub.io/api/news?id=23815c0f59beaaea374ffcfc346f30a365e229593e0a58ae6f6bd099d5e406b7",
+      "published": "2026-02-26"
+    },
+    {
+      "title": "Why Nvidia (NVDA) Stock Is Trading Lower Today",
+      "url": "https://finnhub.io/api/news?id=a14a963f4a2f146b944b594707aaea5b35ee854e0654608363a776734839e98b",
+      "published": "2026-02-26"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:43+00:00"
+}

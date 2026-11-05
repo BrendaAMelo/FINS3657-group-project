@@ -1,0 +1,27 @@
+{
+  "ticker": "BA",
+  "date": "2026-09-24",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Boeing secured major aircraft orders, including 111 planes from T\u00fcrkiye and Bangladesh praised by Trump, alongside a separate Turkish Airlines order of 150 jets, while investors also weighed labor developments and a weak technical setup.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Trump Hails Boeing\u2019s 111-Plane Deals With T\u00fcrkiye, Bangladesh, Says They\u2019ll Support \u2018Tens of Thousands\u2019 of American Jobs: \u2018Big Day\u2019 for US Manufacturing",
+      "url": "https://finnhub.io/api/news?id=d29e2ecd979ea62a936bc8e1c26135495767dbfa86e59f3c47b3d05f7fc4a5a4",
+      "published": "2026-09-24"
+    },
+    {
+      "title": "Turkish Airlines orders 150 Boeing 737 MAX jets in major new deal",
+      "url": "https://finnhub.io/api/news?id=c4aa143a60b74977c355f7b486cde973aae5d06cc4b3e151e198636c91985cc4",
+      "published": "2026-09-24"
+    },
+    {
+      "title": "Boeing Gets Fresh Demand Boost While Union Vote, Weak Technicals Loom",
+      "url": "https://finnhub.io/api/news?id=7269eb386ff6d4efa2b76d191572cb4a7f6c4b350163a0d7a60a977748dff235",
+      "published": "2026-09-24"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:11+00:00"
+}

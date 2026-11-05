@@ -1,0 +1,27 @@
+{
+  "ticker": "KO",
+  "date": "2026-10-27",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Coca-Cola reported third-quarter adjusted earnings per share and sales that beat analyst estimates, while also raising its full-year earnings guidance.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Coca-Cola Q3 Adj. EPS $0.91 Beats $0.88 Estimate, Sales $13.400B Beat $12.920B Estimate",
+      "url": "https://finnhub.io/api/news?id=3dd9e4eb7be8148c7083ee0bae8cf35f2ab7c7ce328c86bdd0e1f760b27c2ed8",
+      "published": "2026-10-27"
+    },
+    {
+      "title": "Coca-Cola Raises FY2026 Adj EPS Guidance from $3.27-$3.30 to $3.33 vs $3.31 Est",
+      "url": "https://finnhub.io/api/news?id=baa907b0c6a4e49e641695e1c524363b107db9ae4e3a3aaf9eaac55631ed4632",
+      "published": "2026-10-27"
+    },
+    {
+      "title": "Coca-Cola Reports Third Quarter 2026 Results and Raises Full Year Guidance",
+      "url": "https://finnhub.io/api/news?id=18f62544d0d21c16e0749e6057d809a8449506be4c630ed8914eee7f3e8dd0d6",
+      "published": "2026-10-27"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:12+00:00"
+}

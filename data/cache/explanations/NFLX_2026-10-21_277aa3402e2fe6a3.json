@@ -1,0 +1,22 @@
+{
+  "ticker": "NFLX",
+  "date": "2026-10-21",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Netflix shares fell after the company lowered its 2026 advertising revenue forecast, projected decelerating fourth-quarter growth, and posted quarterly revenue guidance that missed expectations.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Why Netflix (NFLX) shares are falling today",
+      "url": "https://finnhub.io/api/news?id=8357335592b7611b1784a1a77942b7eaa5e6d32b2cfe756eda57db6f71c69951",
+      "published": "2026-10-21"
+    },
+    {
+      "title": "Netflix (NASDAQ:NFLX) Posts Q3 2026 Sales In Line With Estimates But Quarterly Revenue Guidance Slightly Misses Expectations",
+      "url": "https://finnhub.io/api/news?id=a1f84e958d83b566f04c63e689266d3d90ffa5e1ba3f0db5c351c2ea03618496",
+      "published": "2026-10-20"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:17:26+00:00"
+}

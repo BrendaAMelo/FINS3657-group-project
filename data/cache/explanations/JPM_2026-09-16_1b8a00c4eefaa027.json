@@ -1,0 +1,22 @@
+{
+  "ticker": "JPM",
+  "date": "2026-09-16",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "JPMorgan Chase shares moved following an upbeat revenue outlook provided by Co-President Doug Petno at a Barclays conference, where he flagged mid to high teens growth in third-quarter investment banking fees and markets revenue.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Why JPMorgan Chase (JPM) Is Back In The Spotlight",
+      "url": "https://finnhub.io/api/news?id=2be137d0525e12a4ef9fd53532b9d3ee00fd7258264170ef0ea4040e1a24b86f",
+      "published": "2026-09-16"
+    },
+    {
+      "title": "JPMorgan Chase stock rises after upbeat revenue outlook",
+      "url": "https://finnhub.io/api/news?id=df220444c03614d5c8c79795ddc6845a5d797bbe38446705ea53b48d926ceacb",
+      "published": "2026-09-15"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:47+00:00"
+}

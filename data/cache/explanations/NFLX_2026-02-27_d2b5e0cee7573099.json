@@ -1,0 +1,27 @@
+{
+  "ticker": "NFLX",
+  "date": "2026-02-27",
+  "summary": "Price and volume moved unusually compared with this stock's own history.",
+  "text": "Netflix shares rose after the company walked away from a bidding war for Warner Bros. Discovery, a decision that investors viewed as a sign of financial discipline.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Why Netflix (NFLX) Stock Is Up Today",
+      "url": "https://finnhub.io/api/news?id=bbce3e3a0554127a9c0480dd9cfd3d71f3565df70aa57eca88c88a25d1109879",
+      "published": "2026-02-27"
+    },
+    {
+      "title": "Netflix (NFLX) Soars 13.7% After Dropping Warner Bros Bid",
+      "url": "https://finnhub.io/api/news?id=ec6aadbea59651e2d5493319c2da6c98dfe43dd075b1124592f02a0d11b03d99",
+      "published": "2026-02-28"
+    },
+    {
+      "title": "Netflix walks away from Warner Bros. bid as Paramount closes in on $111bn deal",
+      "url": "https://finnhub.io/api/news?id=2cccc19e1ed8e092d3f6136972bd35390c5220ecf1f59dd23c232186a7bb42c3",
+      "published": "2026-02-27"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-05T14:18:22+00:00"
+}
