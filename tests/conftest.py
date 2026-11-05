@@ -31,3 +31,7 @@ def make_prices():
         )
 
     return _make
+
+
+def test_every_pool_ticker_has_news_aliases():
+    assert set(config.STOCK_POOL) <= set(config.NEWS_ALIASES)
