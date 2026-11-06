@@ -39,7 +39,10 @@ def run(page, client=None):
     if client is not None:
         at.session_state["client_id"] = client.client_id
 
-    return at.run()
+    at.run()
+    if page is alerts_page:
+        at.button[0].click().run()
+    return at
 
 
 def fake_alert(ticker="KO", status="ok", client_id=1):
@@ -55,6 +58,50 @@ def fake_alert(ticker="KO", status="ok", client_id=1):
         explanation_status=status,
         sources=(Source("A story", "https://example.com/1"),) if status == "ok" else (),
     )
+
+
+def test_dashboard_loads_only_on_manual_refresh(monkeypatch):
+    client = create_test_client()
+    calls = []
+
+    def load(selected):
+        calls.append(selected.client_id)
+        return [fake_alert(client_id=selected.client_id)]
+
+    monkeypatch.setattr(cached, "alerts_for", load)
+    at = AppTest.from_function(alerts_page, default_timeout=TIMEOUT).run()
+    assert not at.exception
+    assert not calls
+    assert not at.metric
+    assert any("Click Refresh dashboard" in item.value for item in at.info)
+
+    at.button[0].click().run()
+    assert not at.exception
+    assert client.client_id in calls
+    first_load = list(calls)
+
+    at.text_input[0].set_value("KO").run()
+    at.selectbox[1].set_value("Newest first").run()
+    review = next(widget for widget in at.selectbox if widget.label == "Review status")
+    review.set_value("Reviewed").run()
+    assert not at.exception
+    assert calls == first_load
+    assert clients.get_alert_reviews(client.client_id)[("KO", "2026-03-12", "isolation_forest")] == "Reviewed"
+
+    at.button[0].click().run()
+    assert not at.exception
+    assert calls == first_load * 2
+
+    clients.add_holding(client.client_id, "PG")
+    at.run()
+    assert not at.exception
+    assert calls == first_load * 2
+    assert any("holdings have changed" in item.value for item in at.info)
+    assert not at.metric
+    at.button[0].click().run()
+    assert not at.exception
+    assert calls == first_load * 3
+    assert at.metric
 
 
 def test_alerts_page_shows_metrics_and_cards(monkeypatch):
@@ -119,6 +166,7 @@ def test_alerts_page_shows_data_errors_politely(monkeypatch):
 
     at = AppTest.from_function(alerts_page, default_timeout=TIMEOUT)
     at.run()
+    at.button[0].click().run()
 
     assert not at.exception
 
@@ -237,7 +285,7 @@ def test_incomplete_monitoring_is_not_reported_as_all_clear(monkeypatch):
     assert any("could not be completed" in item.value for item in at.warning)
 
 
-def test_pending_news_updates_to_completed_explanation(monkeypatch):
+def test_pending_news_updates_only_after_manual_refresh(monkeypatch):
     client = create_test_client()
     pending = replace(
         fake_alert(client_id=client.client_id),
@@ -250,13 +298,16 @@ def test_pending_news_updates_to_completed_explanation(monkeypatch):
     monkeypatch.setattr(cached, "alerts_for", lambda selected: current[0])
     at = run(alerts_page, client)
     assert not at.exception
-    assert any("update automatically" in item.value for item in at.info)
+    assert any("click Refresh dashboard" in item.value for item in at.info)
     assert any("Related report" in item.value for item in at.markdown)
     current[0] = [fake_alert(client_id=client.client_id)]
     at.run()
     assert not at.exception
+    assert not any("Revenue was" in item.value for item in at.markdown)
+    at.button[0].click().run()
+    assert not at.exception
     assert any("Revenue was" in item.value for item in at.markdown)
-    assert not any("update automatically" in item.value for item in at.info)
+    assert not any("click Refresh dashboard" in item.value for item in at.info)
 
 
 def test_adding_holdings_requests_automatic_dashboard_navigation(monkeypatch):

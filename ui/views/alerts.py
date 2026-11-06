@@ -127,7 +127,6 @@ def _render_alert(
             st.write(f"Detector: {alert.detector} · Score: {alert.score:.2f}")
 
 
-@st.fragment(run_every="2s")
 def render() -> None:
     st.title("Needs attention")
     disclaimer()
@@ -136,6 +135,7 @@ def render() -> None:
     all_clients = client_service.list_clients()
 
     if not all_clients:
+        st.session_state.pop("dashboard_snapshot", None)
         st.info("There are no clients yet. Add your first client on the Clients page.")
         return
 
@@ -149,25 +149,49 @@ def render() -> None:
         "Isolation Forest alerts across the historical monitoring period. News explanations are retrospective "
         "and can include articles published after the flagged day. Missing explanations do not invalidate alerts."
     )
-    if st.button("Refresh and retry unavailable explanations"):
+    refresh = st.button(
+        "Refresh dashboard",
+        type="primary",
+        help="Check all client holdings, update explanations and retry unavailable explanations.",
+    )
+
+    if not any(client.holdings for client in all_clients):
+        st.session_state.pop("dashboard_snapshot", None)
+        st.info("No clients have holdings yet. Add holdings on the Clients page.")
+        return
+
+    if refresh:
         cached.clear_data()
+        all_alerts: list[tuple[Alert, str]] = []
+        client_errors: list[tuple[str, str]] = []
 
-    all_alerts: list[tuple[Alert, str]] = []
-    client_errors: list[tuple[str, str]] = []
+        with st.spinner("Checking all client holdings..."):
+            for client in all_clients:
+                if not client.holdings:
+                    continue
+                try:
+                    client_alerts = cached.alerts_for(client)
+                    all_alerts.extend((alert, client.name) for alert in client_alerts)
+                except (DataError, InputError) as err:
+                    # Keep displaying other clients if one client's data fails.
+                    client_errors.append((client.name, str(err)))
+
+        st.session_state["dashboard_snapshot"] = (all_clients, all_alerts, client_errors)
+
+    snapshot = st.session_state.get("dashboard_snapshot")
+    if snapshot is None:
+        st.info("Click Refresh dashboard to check client holdings and load alerts.")
+        return
+    if snapshot[0] != all_clients:
+        st.info("Client details or holdings have changed. Click Refresh dashboard to update alerts.")
+        return
+
+    _, all_alerts, client_errors = snapshot
+    st.caption("Results update only when you click Refresh dashboard.")
     reviews_by_client: dict[int, dict] = {}
-
-    with st.spinner("Checking all client holdings..."):
-        for client in all_clients:
-            if not client.holdings:
-                continue
-
-            try:
-                client_alerts = cached.alerts_for(client)
-                all_alerts.extend((alert, client.name) for alert in client_alerts)
-                reviews_by_client[client.client_id] = client_service.get_alert_reviews(client.client_id)
-            except (DataError, InputError) as err:
-                # Keep displaying other clients if one client's data fails.
-                client_errors.append((client.name, str(err)))
+    for client in all_clients:
+        if client.holdings:
+            reviews_by_client[client.client_id] = client_service.get_alert_reviews(client.client_id)
 
     if client_errors:
         with st.expander(
@@ -179,11 +203,10 @@ def render() -> None:
 
     pending = sum(alert.explanation_status == "pending" for alert, _ in all_alerts)
     if pending:
-        st.info(f"Preparing {pending} news explanation(s). Alerts are ready; explanations update automatically.")
-
-    if not any(client.holdings for client in all_clients):
-        st.info("No clients have holdings yet. Add holdings on the Clients page.")
-        return
+        st.info(
+            f"Preparing {pending} news explanation(s). Alerts are ready; "
+            "click Refresh dashboard to see completed explanations."
+        )
 
     total_holdings = sum(len(client.holdings) for client in all_clients)
     total_clients = len(all_clients)
