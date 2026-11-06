@@ -174,7 +174,9 @@ def _holdings_section(client: Client) -> None:
                 st.write(f"- **{ticker or '(blank)'}**: {reason}")
 
         if added:
-            message = f"Added {len(added)} holding(s). Checking alerts and preparing news explanations automatically."
+            message = (
+                f"Added {len(added)} holding(s). Click Refresh dashboard to check alerts and prepare explanations."
+            )
             if skipped:
                 message += " Skipped: " + "; ".join(f"{ticker}: {reason}" for ticker, reason in skipped)
             flash(message, kind="warning" if skipped else "success")

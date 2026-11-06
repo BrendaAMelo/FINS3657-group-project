@@ -9,12 +9,12 @@ from services.explanation_jobs import explain
 _SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
 
-def get_alerts(client_id: int) -> list[Alert]:
+def get_alerts(client_id: int, *, generate_explanations: bool = False) -> list[Alert]:
     client = clients.get_client(client_id)
     alerts = []
     for holding in client.holdings:
         for flag in detection.get_flags(holding.ticker, client.profile, client.sensitivity_override):
-            explanation = explain(flag.ticker, flag.day, flag.summary)
+            explanation = explain(flag.ticker, flag.day, flag.summary, generate=generate_explanations)
             alerts.append(
                 Alert(
                     client_id=client_id,

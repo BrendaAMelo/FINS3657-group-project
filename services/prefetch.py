@@ -1,4 +1,4 @@
-"""Optional cache warming; the app also generates missing explanations automatically.
+"""Optional cache warming; the app generates missing explanations on manual refresh.
 
 Use --alerts for current clients or --tickers for a prepared demo pool.
 """

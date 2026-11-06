@@ -7,10 +7,10 @@ from services import alerts, explanation_jobs, history
 from services.contracts import Alert, Client
 
 
-def alerts_for(client: Client) -> list[Alert]:
+def alerts_for(client: Client, *, generate_explanations: bool = False) -> list[Alert]:
     # Detection and explanations have their own caches. Do not freeze pending
     # job statuses in Streamlit's 15-minute page-data cache.
-    return alerts.get_alerts(client.client_id)
+    return alerts.get_alerts(client.client_id, generate_explanations=generate_explanations)
 
 
 @st.cache_data(ttl=900, show_spinner=False)
