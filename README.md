@@ -148,6 +148,13 @@ The Stage D news window includes articles published after the flagged day and th
 - **Historical rather than daily monitoring:** the application uses a fixed market-data snapshot. It does not automatically refresh prices and news, rerun detection each trading day, or deliver live notifications.
 - **Limited feedback loop:** saved review statuses support adviser workflow, but they do not capture structured judgments about false alerts or explanation quality and do not update model settings automatically.
 - **Explanation uncertainty:** relevant articles and valid citations do not establish what caused a market move. Sparse reporting, incomplete summaries, and language-model errors can limit explanation quality. The retrospective news window can include articles published after the flagged day.
+- **No authentication:** The application uses a shared workspace without adviser authentication or separation of client records. Users accessing the same deployment can view and modify the same clients, holdings, and review statuses.
+- **Anomaly scores are not financial-risk measures:** unusual price or volume activity does not establish that a holding is unsuitable or that action is required. Client risk profiles adjust monitoring sensitivity rather than provide a full suitability assessment.
+- **Limited portfolio context:** stock-level alerts do not quantify portfolio exposure, concentration, or the monetary impact of a move. A highly unusual move in a small position may matter less than a moderate move in a large position.
+- **Potentially repetitive alerts:** related moves across stocks, clients, or consecutive days can generate multiple warnings about the same underlying event. This creates a risk of alert fatigue rather than an established measured outcome.
+- **Model stability requires reassessment:** historical relationships and thresholds may become less appropriate as market conditions change. There is no scheduled drift-monitoring or retraining workflow.
+- **Limited evaluation representativeness:** the labelled event set and observation period cannot establish performance across all market conditions. The current news coverage report contains only heavily reported events, and explanation statuses are not independent quality ratings. Model performance remains subject to Stage C evaluation.
+- **Prototype operational resilience:** local SQLite storage and file caches do not provide an implemented backup-and-restore workflow, coordinated background jobs, or conflict detection for simultaneous edits. Larger deployments would require further operational testing; no concurrent-user capacity is claimed.
 
 ## Planned future enhancements
 
@@ -157,3 +164,10 @@ The Stage D news window includes articles published after the flagged day and th
 4. Capture structured adviser feedback on alert usefulness, false positives, and explanation quality to support reviewed threshold changes and periodic model reassessment.
 5. Add an alert-time explanation mode that only uses news available when the alert was raised, alongside clearly labelled retrospective explanations.
 6. Broaden evaluation across stocks, market conditions, and sparse-news cases, including human review of explanation support and usefulness.
+7. Introduce adviser accounts, ownership-based access controls, and an audit trail before supporting independent advisers or real client data.
+8. Distinguish statistical unusualness from financial impact in alert wording, and explain what sensitivity settings and anomaly scores mean without presenting them as suitability judgments or probabilities of loss.
+9. Incorporate position values, portfolio weights, and concentration measures into alert prioritisation while retaining the original anomaly score.
+10. Group related alerts across stocks and dates, reuse shared event context across clients, and offer adviser-controlled digests to reduce repetitive review.
+11. Monitor score distributions, alert frequency, and data quality over time; reassess models through chronological validation before approving retraining or threshold changes.
+12. Add tested backups and recovery, coordinated background processing, conflict detection, and load testing; assess a server database if deployment requirements justify it.
+
