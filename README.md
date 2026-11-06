@@ -67,7 +67,7 @@ Start the application:
 streamlit run app.py
 ```
 
-Use **Clients** to manage clients, holdings, profiles, and sensitivity. Use **Needs attention** to filter and review real historical alerts, and **Price charts** to inspect adjusted prices and matching anomaly markers. **How it works** provides application guidance.
+Use **Clients** to manage clients, holdings, profiles, and sensitivity. Use **Needs attention** to filter and review real historical alerts. When grouped by client, warnings appear in collapsed panels labelled with the client name and filtered warning count; expand a panel to review its alerts. Use **Price charts** to inspect adjusted prices and matching anomaly markers. **How it works** provides application guidance.
 
 To prepare data and Stage D artifacts:
 
@@ -157,4 +157,3 @@ The Stage D news window includes articles published after the flagged day and th
 4. Capture structured adviser feedback on alert usefulness, false positives, and explanation quality to support reviewed threshold changes and periodic model reassessment.
 5. Add an alert-time explanation mode that only uses news available when the alert was raised, alongside clearly labelled retrospective explanations.
 6. Broaden evaluation across stocks, market conditions, and sparse-news cases, including human review of explanation support and usefulness.
-

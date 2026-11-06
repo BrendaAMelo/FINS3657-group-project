@@ -1,0 +1,22 @@
+{
+  "ticker": "PG",
+  "date": "2026-07-29",
+  "summary": "PG closed -1.87% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Procter & Gamble shares fell after the company reported quarterly revenue that missed expectations and issued a cautious guidance, despite beating earnings estimates.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Procter & Gamble revenue misses estimates as volume stays unchanged",
+      "url": "https://finnhub.io/api/news?id=6cd05e53c3a0fe5fbaf63da0da119096a010216e0f0ecc3e00ac1121e1a301f6",
+      "published": "2026-07-29"
+    },
+    {
+      "title": "Procter & Gamble falls on weak sales, cautious guidance",
+      "url": "https://finnhub.io/api/news?id=718c3015a2f748a0e1a6232447955c2ffab705added581f2162a69e2ee07b42a",
+      "published": "2026-07-29"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:54+00:00"
+}

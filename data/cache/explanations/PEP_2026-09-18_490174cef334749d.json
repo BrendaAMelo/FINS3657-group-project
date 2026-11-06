@@ -1,0 +1,27 @@
+{
+  "ticker": "PEP",
+  "date": "2026-09-18",
+  "summary": "PEP closed -2.93% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "PepsiCo shares traded lower and fell to a 52-week low amid disappointing North American snack and drink sales, while the broader market gained.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "PepsiCo (PEP) Stock Dips While Market Gains: Key Facts",
+      "url": "https://finnhub.io/api/news?id=6501296dbf2a9ef04226e57ad4238c02918a2afaaa0bd0c6cf9f0eed4c8efea6",
+      "published": "2026-09-18"
+    },
+    {
+      "title": "Should You Buy PepsiCo Stock Because Its International Business Keeps Accelerating?",
+      "url": "https://finnhub.io/api/news?id=a3634cbd6e48fc26a7f3e0d8f3c0dafb35e3351b9a29d4e69793c21de7ba115e",
+      "published": "2026-09-21"
+    },
+    {
+      "title": "PepsiCo Stock Drops to 52 Week-Low: What's Going On?",
+      "url": "https://finnhub.io/api/news?id=556610298aca106f11c858eeadf78b5e22b328bff510fd59b8403b2914b44ed3",
+      "published": "2026-09-18"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:35+00:00"
+}

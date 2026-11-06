@@ -1,3 +1,4 @@
+from dataclasses import replace
 from datetime import date
 
 import pandas as pd
@@ -234,3 +235,48 @@ def test_incomplete_monitoring_is_not_reported_as_all_clear(monkeypatch):
     assert not at.exception
     assert not any("Nothing unusual" in item.value for item in at.success)
     assert any("could not be completed" in item.value for item in at.warning)
+
+
+def test_pending_news_updates_to_completed_explanation(monkeypatch):
+    client = create_test_client()
+    pending = replace(
+        fake_alert(client_id=client.client_id),
+        explanation_status="pending",
+        sources=(),
+        explanation="Preparing a news explanation automatically.",
+        related_news=(Source("Related report", "https://example.com/related"),),
+    )
+    current = [[pending]]
+    monkeypatch.setattr(cached, "alerts_for", lambda selected: current[0])
+    at = run(alerts_page, client)
+    assert not at.exception
+    assert any("update automatically" in item.value for item in at.info)
+    assert any("Related report" in item.value for item in at.markdown)
+    current[0] = [fake_alert(client_id=client.client_id)]
+    at.run()
+    assert not at.exception
+    assert any("Revenue was" in item.value for item in at.markdown)
+    assert not any("update automatically" in item.value for item in at.info)
+
+
+def test_adding_holdings_requests_automatic_dashboard_navigation(monkeypatch):
+    client = create_test_client(ticker=None)
+    monkeypatch.setattr(cached, "alerts_for", lambda selected: [])
+    at = run(clients_page, client)
+    at.multiselect[0].set_value(["AAPL", "MSFT", "NVDA"])
+    next(button for button in at.button if button.label == "Add selected holdings").click().run()
+    assert not at.exception
+    assert {h.ticker for h in clients.get_client(client.client_id).holdings} == {"AAPL", "MSFT", "NVDA"}
+    assert at.session_state["open_alerts_after_holdings"] is True
+
+
+def test_full_app_consumes_dashboard_navigation_request(monkeypatch):
+    create_test_client()
+    monkeypatch.setattr(cached, "alerts_for", lambda selected: [])
+    at = AppTest.from_file("../app.py", default_timeout=TIMEOUT)
+    at.session_state["open_alerts_after_holdings"] = True
+    at.run()
+    assert not at.exception
+    assert any(title.value == "Needs attention" for title in at.title)
+    with pytest.raises(KeyError):
+        _ = at.session_state["open_alerts_after_holdings"]

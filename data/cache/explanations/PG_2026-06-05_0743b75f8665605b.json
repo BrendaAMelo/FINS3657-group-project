@@ -1,0 +1,17 @@
+{
+  "ticker": "PG",
+  "date": "2026-06-05",
+  "summary": "PG closed +4.09% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Investors rotated toward consumer staples and treated Procter & Gamble as a haven during broader market volatility tied to concerns over technology stocks and interest rates.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Is P&G\u2019s Haven Status During Volatility Reframing the Core Investment Case for PG?",
+      "url": "https://finnhub.io/api/news?id=68d5605bef207fd4ac1818f6d9cd0ae1e6fbdb9a9c091a4826d6fef84e9724b0",
+      "published": "2026-06-06"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:50+00:00"
+}

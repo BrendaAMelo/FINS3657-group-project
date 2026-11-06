@@ -1,0 +1,17 @@
+{
+  "ticker": "WMT",
+  "date": "2026-03-05",
+  "summary": "WMT closed -3.52% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Erste Group downgraded Walmart to Hold from Buy on March 5, and an FTC settlement added pressure [4].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Erste Group Downgrades Walmart (WMT) to Hold from Buy; FTC Settlement Adds Pressure",
+      "url": "https://finnhub.io/api/news?id=389a507bab729b0d088efdc1c578aa9ddf0aa259c12f6fb3795236832363b5e2",
+      "published": "2026-03-06"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:23+00:00"
+}

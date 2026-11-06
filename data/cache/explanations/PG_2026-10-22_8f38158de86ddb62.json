@@ -1,0 +1,37 @@
+{
+  "ticker": "PG",
+  "date": "2026-10-22",
+  "summary": "PG closed +5.58% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Procter & Gamble reported fiscal first-quarter results that beat Wall Street's estimates for earnings and revenue, driven by a four percent increase in sales and organic sales growth. [1, 2, 3, 4, 6]",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Procter & Gamble earnings beat as sales rise 4%, boosted by laundry and home products",
+      "url": "https://finnhub.io/api/news?id=c156b03b8282013a6a0e1ad7dec38d83ea0d6fe7c50d22736cb9a3b68190a814",
+      "published": "2026-10-22"
+    },
+    {
+      "title": "P&G CFO Andre Schulten on Q1 results: Driven by 4% organic sales growth",
+      "url": "https://finnhub.io/api/news?id=146fbe49a32ee165e82437bc00013a0abb03f7db380e9b4634c13a18481eb426",
+      "published": "2026-10-22"
+    },
+    {
+      "title": "P&G Announces Fiscal Year 2027 First Quarter Results",
+      "url": "https://finnhub.io/api/news?id=68e2ea884eab00c3f3a537ce3556b37c3574461c17d56cd1cc3fe61ea5b10ec9",
+      "published": "2026-10-22"
+    },
+    {
+      "title": "Procter & Gamble (NYSE:PG) exceeds Q3 CY2026 expectations",
+      "url": "https://finnhub.io/api/news?id=31e2bc9bc7a40ff06733b7505b9d49ea93199e6a6f1752c1f0a7f5b8939421e0",
+      "published": "2026-10-22"
+    },
+    {
+      "title": "Procter & Gamble (PG) Q1 Earnings and Revenues Beat Estimates",
+      "url": "https://finnhub.io/api/news?id=c6d2aa010241c0f4b3245fae572bbdd4b76d5dad6404f77897d897e7c9811240",
+      "published": "2026-10-22"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:56+00:00"
+}

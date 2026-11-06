@@ -1,0 +1,27 @@
+{
+  "ticker": "WMT",
+  "date": "2026-08-20",
+  "summary": "WMT closed -9.15% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Walmart reported its Q2 earnings results alongside soft Q3 guidance and softer U.S. comps, prompting analysts to reset their fair value estimates and price targets.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "WMT Stock Just Got Crushed 9% \u2014 Top Analyst Says Walmart's E-Commerce, Advertising Growth Still \u2018Support the Bull Case\u2019",
+      "url": "https://finnhub.io/api/news?id=f8b341a0e6babc0bae29a5259da6b1370ad04b89a573e18b6d99c19745cfaf7c",
+      "published": "2026-08-21"
+    },
+    {
+      "title": "Walmart (WMT) Stock Fair Value Falls After Softer U.S. Comps Prompt Analyst Resets",
+      "url": "https://finnhub.io/api/news?id=e3854098f72afe9d3e89b8323c08cdb6e52ad6a26727c530d3766a5b92358340",
+      "published": "2026-08-22"
+    },
+    {
+      "title": "Walmart Q2 Adj. EPS $0.81 Beats $0.74 Estimate, Sales $187.937B Beat $186.794B Estimate",
+      "url": "https://finnhub.io/api/news?id=6ba774eb95cfeb0de7f86c0c1d9c012d4b7d50503bef613bdf1b38cafd8894ee",
+      "published": "2026-08-20"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:28+00:00"
+}

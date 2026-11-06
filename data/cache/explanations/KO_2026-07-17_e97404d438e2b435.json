@@ -1,0 +1,27 @@
+{
+  "ticker": "KO",
+  "date": "2026-07-17",
+  "summary": "KO closed -3.96% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Coca-Cola experienced a ransomware attack and cybersecurity incident that forced a temporary halt in U.S. production of its Fairlife milk operations.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Coca-Cola temporarily halts production of Fairlife milk after cyberattack",
+      "url": "https://finnhub.io/api/news?id=8e72ce8177fee8ed8a4bb22ecee7dec38d3472f3d2c413c0ac3f83dab1c0d95f",
+      "published": "2026-07-17"
+    },
+    {
+      "title": "Coca-Cola's fairlife Hit By Ransomware Attack, Temporarily Suspends U.S. Production; Product Quality And Safety Have Not Been Impacted",
+      "url": "https://finnhub.io/api/news?id=549fc12620bfaccc1b7bb8a93c1d4b96d7488e6a57acb6c78ed8aa7ebc252875",
+      "published": "2026-07-16"
+    },
+    {
+      "title": "The Coca-Cola Company Announces Technology Disruption Involving fairlife Operations",
+      "url": "https://finnhub.io/api/news?id=2d427ad2d8070ec0c37daefd31350b4e684ef62060210d820a41a004377d2c7c",
+      "published": "2026-07-16"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:43+00:00"
+}

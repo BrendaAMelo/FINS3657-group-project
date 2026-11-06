@@ -283,14 +283,13 @@ def render() -> None:
             grouped[item[1]].append(item)
 
         for client_name, items in sorted(grouped.items()):
-            st.markdown(f"### {client_name} · {len(items)} warning(s)")
-
-            for alert, name in items:
-                status = reviews_by_client.get(alert.client_id, {}).get(
-                    _alert_key(alert),
-                    "Unreviewed",
-                )
-                _render_alert(alert, name, status)
+            with st.expander(f"{client_name} · {len(items)} warning(s)", expanded=False):
+                for alert, name in items:
+                    status = reviews_by_client.get(alert.client_id, {}).get(
+                        _alert_key(alert),
+                        "Unreviewed",
+                    )
+                    _render_alert(alert, name, status)
 
     else:
         grouped = defaultdict(list)

@@ -1,0 +1,10 @@
+{
+  "source": "Yahoo Finance via yfinance; auto_adjust=True",
+  "ticker": "CRWD",
+  "requested_start": "2016-11-04",
+  "requested_end": "2026-11-04",
+  "actual_start": "2019-06-12",
+  "actual_end": "2026-11-04",
+  "rows": 1861,
+  "retrieved_at": "2026-11-06T01:46:16.327451+00:00"
+}

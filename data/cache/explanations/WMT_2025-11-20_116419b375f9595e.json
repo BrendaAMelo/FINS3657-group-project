@@ -1,0 +1,27 @@
+{
+  "ticker": "WMT",
+  "date": "2025-11-20",
+  "summary": "WMT closed +6.46% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Walmart shares rose after the company reported better-than-expected third-quarter results and raised its full-year financial outlook. Additionally, Truist Securities raised its price target for the stock following the strong performance.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Why Is Walmart (WMT) Stock Rocketing Higher Today",
+      "url": "https://finnhub.io/api/news?id=9f103919635c3f249c5b17c81632b073789e38301dca87496223919766102692",
+      "published": "2025-11-20"
+    },
+    {
+      "title": "Walmart (WMT) Valuation in Focus as Strong Q3, Raised Outlook, and Leadership Moves Shape Future Expectations",
+      "url": "https://finnhub.io/api/news?id=beba73ff68ad9d32ec62bc27439bfda5e5b06311300214e35297e6fced7b5d7f",
+      "published": "2025-11-24"
+    },
+    {
+      "title": "Truist Lifts Walmart (WMT) Price Target to $119 After Strong Q3 Performance",
+      "url": "https://finnhub.io/api/news?id=ee889dbaf5a369ce81565e29243ca1b701fcf328f0b7a17968778a2e6d0aad21",
+      "published": "2025-11-24"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:15+00:00"
+}

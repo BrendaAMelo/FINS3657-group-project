@@ -1,0 +1,17 @@
+{
+  "ticker": "WMT",
+  "date": "2026-01-12",
+  "summary": "WMT closed +3.00% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Walmart shares traded higher after the company was announced to join the Nasdaq-100 index and announced a partnership with Google for Gemini-powered product discovery and shopping.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Walmart Joins Nasdaq-100, Teams Up With Google, Shares Surge",
+      "url": "https://finnhub.io/api/news?id=bcff69951434434f2cd6077f4287237a8fc35fbfcba33ec3561f834702bf155f",
+      "published": "2026-01-12"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:17+00:00"
+}

@@ -1,0 +1,32 @@
+{
+  "ticker": "WMT",
+  "date": "2026-05-21",
+  "summary": "WMT closed -7.27% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Walmart reported first-quarter results with revenue meeting expectations and topping estimates, but issued a cautious outlook and next quarter revenue guidance that came in below analysts' estimates, contributing to the downward price movement.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Walmart\u2019s (NASDAQ:WMT) Q1 CY2026 Earnings Results: Revenue In Line With Expectations",
+      "url": "https://finnhub.io/api/news?id=2aa50fc61c20335c60a0645e54edef1fc0cb4613d26f531f46f175606da0c890",
+      "published": "2026-05-21"
+    },
+    {
+      "title": "Walmart (WMT) Q1 Earnings and Revenues Top Estimates",
+      "url": "https://finnhub.io/api/news?id=4c3659e38766a7352058212dd4df7163d1be33a5e049cccc0d22a53ec1505759",
+      "published": "2026-05-21"
+    },
+    {
+      "title": "Walmart shares slip after cautious outlook overshadows revenue beat (WMT)",
+      "url": "https://finnhub.io/api/news?id=9684bcf3a04c31f9678740506f98d55629722eb245f26cb07277be54ba587710",
+      "published": "2026-05-21"
+    },
+    {
+      "title": "Walmart Is Getting Slammed Today. Should You Sell WMT Stock Along With Target and Costco?",
+      "url": "https://finnhub.io/api/news?id=4de4bd92d402e90e72183bb57b9c7de43b039fef1512530ba0e9f803686a252f",
+      "published": "2026-05-21"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:25+00:00"
+}

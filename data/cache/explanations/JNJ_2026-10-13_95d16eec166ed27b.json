@@ -1,0 +1,27 @@
+{
+  "ticker": "JNJ",
+  "date": "2026-10-13",
+  "summary": "JNJ closed -5.73% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Johnson & Johnson reported third-quarter 2026 earnings with revenue that slightly missed estimates and slower-than-expected performance in parts of its MedTech business, causing shares to fall despite raised full-year guidance.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Johnson & Johnson (JNJ) Q3 Earnings Surpass Estimates",
+      "url": "https://finnhub.io/api/news?id=262c13b238ce81163c22a26f3f6904aabad4e33a7e58302516fa88e16ef4eacb",
+      "published": "2026-10-13"
+    },
+    {
+      "title": "What Johnson & Johnson (JNJ) Said on Its Q3 Earnings Call",
+      "url": "https://finnhub.io/api/news?id=0f593418634b1f38da9c9b0121f98d40c008c06dbafd3236e1cf6192478f351f",
+      "published": "2026-10-13"
+    },
+    {
+      "title": "Johnson & Johnson (NYSE:JNJ) Q3 2026: In-Line Results and Raised Guidance Offset by MedTech Weakness",
+      "url": "https://finnhub.io/api/news?id=01842588225a0075aa72ecd6ed31cc56adcfc8b349540f3e23caace88b45fe80",
+      "published": "2026-10-13"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:42:20+00:00"
+}

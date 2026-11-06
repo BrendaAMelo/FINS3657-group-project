@@ -1,0 +1,22 @@
+{
+  "ticker": "JNJ",
+  "date": "2026-07-07",
+  "summary": "JNJ closed +3.05% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Johnson & Johnson presented new IMAAVY data for generalized myasthenia gravis at the European Academy of Neurology Congress, providing investors with fresh information regarding its autoimmune portfolio amid strong share momentum [2]. Additionally, unusual out-of-the-money put option activity occurred following the stock's recent rise [1].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Unusual Put Option Activity in Johnson & Johnson After JNJ Stock's Recent Runup",
+      "url": "https://finnhub.io/api/news?id=4c1c3f57290deb48491833da4a75dc3474ee8e0f7d4bebdda01d37cb6a45aca5",
+      "published": "2026-07-07"
+    },
+    {
+      "title": "Johnson & Johnson (JNJ) Could Be 34% Below Fair Value Following IMAAVY Update",
+      "url": "https://finnhub.io/api/news?id=988b39e0f7b6e3dad27847090c940239d91d7ab667196ed8ab12e11e16e84e87",
+      "published": "2026-07-07"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:38+00:00"
+}

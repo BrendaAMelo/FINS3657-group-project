@@ -8,6 +8,7 @@ import re
 from dataclasses import replace
 from datetime import UTC, date, datetime
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 import config
 from data.errors import DataError
@@ -172,9 +173,15 @@ def _write_cache(key: str, ticker: str, flag_date: date, summary: str, result: E
         "prompt_version": config.PROMPT_VERSION,
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
     }
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(data, indent=2), encoding="utf-8")
-    temporary.replace(path)
+    temporary = None
+    try:
+        with NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, suffix=".tmp", delete=False) as handle:
+            temporary = Path(handle.name)
+            json.dump(data, handle, indent=2)
+        temporary.replace(path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def explain(ticker: str, flag_date: date, summary: str, *, generate: bool = True) -> Explanation:

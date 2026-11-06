@@ -1,0 +1,32 @@
+{
+  "ticker": "KO",
+  "date": "2026-04-28",
+  "summary": "KO closed +3.86% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Coca-Cola reported first-quarter earnings and sales that both beat analyst estimates as global beverage demand rose [2, 3]. Additionally, the company raised its full-year earnings guidance and annual adjusted profit forecast [2, 5, 8].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Coca-Cola tops estimates, raises earnings outlook as global beverage demand rises",
+      "url": "https://finnhub.io/api/news?id=f0d5781d8370ff6fe2cb8634344d50db7f84ae2c041b8476ab5ad8d810e8fc1c",
+      "published": "2026-04-28"
+    },
+    {
+      "title": "Coca-Cola Q1 Adj. EPS $0.86 Beats $0.81 Estimate, Sales $12.500B Beat $12.241B Estimate",
+      "url": "https://finnhub.io/api/news?id=3ff7bcef37e62f20f870d24533c9b05779e9fd811e0ae1c63476429c449f8e8c",
+      "published": "2026-04-28"
+    },
+    {
+      "title": "Coca-Cola Raises FY2026 Adj EPS Guidance from $3.21-$3.24 to $3.24-$3.27 vs $3.23 Est",
+      "url": "https://finnhub.io/api/news?id=a485344251fc460ff4e9a7aba39520fb930103e55fe66b129e75d89ab650b013",
+      "published": "2026-04-28"
+    },
+    {
+      "title": "Coca-Cola raises annual adjusted profit forecast",
+      "url": "https://finnhub.io/api/news?id=9445d058e6728c029c17d5dae986913283f4ebb0f6814721d278b178de896cd1",
+      "published": "2026-04-28"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:31+00:00"
+}

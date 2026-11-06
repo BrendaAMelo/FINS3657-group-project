@@ -1,0 +1,11 @@
+{
+  "ticker": "PG",
+  "date": "2026-07-08",
+  "summary": "PG closed -2.85% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "No clear news found for this move.",
+  "status": "no_news",
+  "sources": [],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:53+00:00"
+}

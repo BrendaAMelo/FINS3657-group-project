@@ -1,0 +1,22 @@
+{
+  "ticker": "KO",
+  "date": "2026-10-22",
+  "summary": "KO closed +2.87% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Coca-Cola secured a deal with KFC to shift U.S. restaurants to Coke products starting in early 2027 and announced the completion of a global marketing operating system review selecting agency partners.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Coca Cola (KO) Looks Fairly Valued After KFC Win Sparks Fresh Questions",
+      "url": "https://finnhub.io/api/news?id=c9a2ad60ab180ee32ef5ea314a3d741cff5ebdad3b7db6acacefdbaeff29bccd",
+      "published": "2026-10-22"
+    },
+    {
+      "title": "Coca-Cola To Retain WPP Open X As Its Media Partner Globally, With Exception Of North America, Japan And South Korea; Coca-Cola Selects Omnicom As Media Partner In North America",
+      "url": "https://finnhub.io/api/news?id=db6b85495d1acbbb8209f23b6f028a7f5ea2cee4a2d68c7efb9c1d9a78e1d5d0",
+      "published": "2026-10-22"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:47+00:00"
+}
