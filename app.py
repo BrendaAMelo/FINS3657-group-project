@@ -4,6 +4,24 @@ from ui.views import alerts, charts, clients, help_page
 
 st.set_page_config(page_title="Adviser Exception Monitor", page_icon=":material/monitoring:", layout="wide")
 
+st.markdown(
+    """
+    <style>
+    [data-testid="stForm"],
+    [data-baseweb="input"],
+    [data-baseweb="input"] input,
+    [data-baseweb="textarea"],
+    [data-baseweb="textarea"] textarea,
+    [data-testid="stSelectbox"] [data-baseweb="select"] > div,
+    [data-testid="stMultiSelect"] [data-baseweb="select"] > div,
+    [data-baseweb="popover"] [role="listbox"] {
+        background-color: #BDC0C0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 pages = [
     st.Page(alerts.render, title="Needs attention", icon=":material/notifications:", url_path="alerts", default=True),
     st.Page(help_page.render, title="How it works", icon=":material/help:", url_path="help"),
