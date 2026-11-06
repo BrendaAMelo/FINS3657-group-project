@@ -164,3 +164,10 @@ EXPLANATION_ATTEMPTS = 2
 EXPLANATION_MAX_CHARS = 700
 PROMPT_VERSION = "v2"
 EXPLANATION_CACHE_DIR = DATA_DIR / "cache" / "explanations"
+
+# Interface
+# Per-client sensitivity override. Same scale as PROFILES["z_threshold"] (lower = more alerts).
+# Change these to match how Stage C applies sensitivity_override.
+OVERRIDE_MIN = 2.0
+OVERRIDE_MAX = 4.0
+OVERRIDE_STEP = 0.1

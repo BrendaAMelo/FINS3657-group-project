@@ -8,17 +8,23 @@ from data import db
 from services import clients
 
 
-def test_demo_clients_are_seeded_once():
-    assert len(clients.list_clients()) == len(clients.DEMO_CLIENTS)
+def test_init_db_does_not_seed_demo_clients():
     clients.ensure_ready()
+
+    assert clients.list_clients() == []
+
     clients.ensure_ready()
-    assert len(clients.list_clients()) == len(clients.DEMO_CLIENTS)
+
+    assert clients.list_clients() == []
 
 
 def test_init_db_is_idempotent():
     db.init_db()
     db.init_db()
-    assert len(clients.list_clients()) == len(clients.DEMO_CLIENTS)
+
+    # Initialisation should be safe to repeat.
+    # It should not create demo clients.
+    assert clients.list_clients() == []
 
 
 def test_data_persists_across_connections():
@@ -41,10 +47,20 @@ def test_holdings_keep_the_order_they_were_added_in():
 
 
 def test_hostile_input_is_stored_literally_and_tables_survive():
-    nasty = "Robert'); DROP TABLE clients;--"
-    client = clients.add_client(nasty, "balanced")
-    assert clients.get_client(client.client_id).name == nasty
-    assert len(clients.list_clients()) == len(clients.DEMO_CLIENTS) + 1
+    clients.ensure_ready()
+
+    hostile_name = "<script>alert('hello')</script>"
+
+    client = clients.add_client(hostile_name, "balanced")
+
+    stored = clients.get_client(client.client_id)
+    assert stored.name == hostile_name
+
+    # Re-initialising the database must not destroy existing data.
+    db.init_db()
+
+    stored_again = clients.get_client(client.client_id)
+    assert stored_again.name == hostile_name
 
 
 def test_database_rejects_an_invalid_profile():

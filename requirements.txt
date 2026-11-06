@@ -5,3 +5,4 @@ requests==2.34.2
 scikit-learn==1.9.1
 streamlit==1.66.1
 yfinance==1.7.0
+altair==6.3.0
