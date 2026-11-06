@@ -186,8 +186,8 @@ Coverage counts run from each event's announcement date to three trading days af
 
 - **Historical coverage:** results depend on saved snapshots. Finnhub's free tier covers about one year of news, so older articles that were not saved cannot be recovered.
 - **Limited stock universe:** 20 US stocks. Findings may not generalise to other companies, markets or asset classes.
-- **No automatic onboarding:** new tickers are rejected. Adding one needs data download, validation, news aliases, model fitting and explanation preparation, which is a developer task.
-- **Historical, not daily, monitoring:** prices end on 30 October 2026 and nothing refreshes automatically. Features use daily closes, so there is no intraday detection.
+- **No automatic onboarding:** new tickers are rejected. Adding one needs data download, validation, news aliases, on-demand model fitting and explanation preparation, which is a developer task.
+- **Historical, not daily, monitoring:** prices and news end on 30 October 2026 and do not refresh automatically. Explanations can still generate in the background. Features use daily closes, so there is no intraday detection.
 - **Limited feedback loop:** review statuses record workflow progress, not whether an alert or explanation was useful or wrong.
 - **Explanation uncertainty:** relevant articles and valid citations do not establish causation, and the news window includes post-flag articles.
 - **No authentication:** The application uses a shared workspace without adviser authentication or separation of client records. Users accessing the same deployment can view and modify the same clients, holdings, and review statuses.
@@ -196,7 +196,7 @@ Coverage counts run from each event's announcement date to three trading days af
 - **Potentially repetitive alerts:** related moves across stocks, clients, or consecutive days can generate multiple warnings about the same underlying event. This creates a risk of alert fatigue rather than an established measured outcome.
 - **Model stability requires reassessment:** historical relationships and thresholds may become less appropriate as market conditions change. There is no scheduled drift-monitoring or retraining workflow.
 - **Limited evaluation representativeness:** the labelled event set and observation period cannot establish performance across all market conditions. The current news coverage report contains only heavily reported events, and explanation statuses are not independent quality ratings. Model performance remains subject to Stage C evaluation.
-- **Prototype operational resilience:** local SQLite storage and file caches do not provide an implemented backup-and-restore workflow, coordinated background jobs, or conflict detection for simultaneous edits. Larger deployments would require further operational testing; no concurrent-user capacity is claimed.
+- **Prototype operational resilience:** local SQLite storage and file caches do not provide an implemented backup-and-restore workflow, cross-process background-job coordination, or conflict detection for simultaneous edits. Larger deployments would require further operational testing; no concurrent-user capacity is claimed.
 
 ## Planned future enhancements
 
@@ -208,7 +208,7 @@ Coverage counts run from each event's announcement date to three trading days af
 6. An alert-time explanation mode with a publication-time cutoff, alongside labelled retrospective explanations.
 7. Portfolio-aware prioritisation using position values, weights and concentration, with the original anomaly score kept visible.
 8. Broader evaluation across stocks, regimes and sparse-news events, with human review of explanation quality.
-9. Distinguish statistical unusualness from financial impact in alert wording, and explain what sensitivity settings and anomaly scores mean without presenting them as suitability judgments or probabilities of loss.
+9. Further distinguish statistical unusualness from financial impact in alert wording, and explain what sensitivity settings and anomaly scores mean without presenting them as suitability judgments or probabilities of loss.
 10. Group related alerts across stocks and dates, reuse shared event context across clients, and offer adviser-controlled digests to reduce repetitive review.
-11. Monitor score distributions, alert frequency, and data quality over time; reassess models through chronological validation before approving retraining or threshold changes.
-12. Add tested backups and recovery, coordinated background processing, conflict detection, and load testing; assess a server database if deployment requirements justify it.
+11. Monitor score distributions, alert frequency, and data quality over time; add ongoing reassessment and approval through chronological validation before retraining or threshold changes.
+12. Add tested backups and recovery, durable cross-process background processing, conflict detection, and load testing; assess a server database if deployment requirements justify it.
