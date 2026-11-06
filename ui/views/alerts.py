@@ -7,7 +7,7 @@ import streamlit as st
 import config
 from data.errors import DataError
 from services import clients as client_service
-from services.contracts import Alert, InputError
+from services.contracts import Alert, Client, InputError
 from ui import cached, formatting
 from ui.components import disclaimer, show_flash
 
@@ -127,8 +127,43 @@ def _render_alert(
             st.write(f"Detector: {alert.detector} · Score: {alert.score:.2f}")
 
 
+def _load_snapshot(all_clients: list[Client], *, generate_explanations: bool = False):
+    all_alerts: list[tuple[Alert, str]] = []
+    client_errors: list[tuple[str, str]] = []
+    for client in all_clients:
+        if not client.holdings:
+            continue
+        try:
+            client_alerts = cached.alerts_for(client, generate_explanations=generate_explanations)
+            all_alerts.extend((alert, client.name) for alert in client_alerts)
+        except (DataError, InputError) as err:
+            client_errors.append((client.name, str(err)))
+    return all_clients, all_alerts, client_errors
+
+
+def _pending_count(all_alerts: list[tuple[Alert, str]]) -> int:
+    return sum(alert.explanation_status == "pending" for alert, _ in all_alerts)
+
+
+@st.fragment(run_every="1s")
+def _wait_for_explanations() -> None:
+    # Only read jobs started by Refresh. Polling never schedules work or retries failures.
+    all_clients, _, _ = st.session_state["dashboard_snapshot"]
+    snapshot = _load_snapshot(all_clients)
+    st.session_state["dashboard_snapshot"] = snapshot
+    _, all_alerts, _ = snapshot
+    pending = _pending_count(all_alerts)
+    if not pending:
+        # A full rerun removes this polling fragment and reveals the finished snapshot.
+        st.rerun()
+    st.info(
+        f"Preparing news explanations — {pending} remaining. Results will appear together when processing finishes."
+    )
+    st.progress((len(all_alerts) - pending) / max(len(all_alerts), 1))
+
+
 def render() -> None:
-    st.title("Needs attention")
+    st.title("Anomaly Dashboard")
     disclaimer()
     show_flash()
 
@@ -149,10 +184,13 @@ def render() -> None:
         "Isolation Forest alerts across the historical monitoring period. News explanations are retrospective "
         "and can include articles published after the flagged day. Missing explanations do not invalidate alerts."
     )
+    snapshot = st.session_state.get("dashboard_snapshot")
+    loading = snapshot is not None and snapshot[0] == all_clients and bool(_pending_count(snapshot[1]))
     refresh = st.button(
         "Refresh dashboard",
         type="primary",
         help="Check all client holdings, update explanations and retry unavailable explanations.",
+        disabled=loading,
     )
 
     if not any(client.holdings for client in all_clients):
@@ -162,21 +200,9 @@ def render() -> None:
 
     if refresh:
         cached.clear_data()
-        all_alerts: list[tuple[Alert, str]] = []
-        client_errors: list[tuple[str, str]] = []
-
         with st.spinner("Checking all client holdings..."):
-            for client in all_clients:
-                if not client.holdings:
-                    continue
-                try:
-                    client_alerts = cached.alerts_for(client)
-                    all_alerts.extend((alert, client.name) for alert in client_alerts)
-                except (DataError, InputError) as err:
-                    # Keep displaying other clients if one client's data fails.
-                    client_errors.append((client.name, str(err)))
-
-        st.session_state["dashboard_snapshot"] = (all_clients, all_alerts, client_errors)
+            st.session_state["dashboard_snapshot"] = _load_snapshot(all_clients, generate_explanations=True)
+        st.rerun()
 
     snapshot = st.session_state.get("dashboard_snapshot")
     if snapshot is None:
@@ -187,7 +213,11 @@ def render() -> None:
         return
 
     _, all_alerts, client_errors = snapshot
-    st.caption("Results update only when you click Refresh dashboard.")
+    if _pending_count(all_alerts):
+        _wait_for_explanations()
+        return
+
+    st.caption("Click Refresh dashboard to run another check. Results appear after all explanations finish processing.")
     reviews_by_client: dict[int, dict] = {}
     for client in all_clients:
         if client.holdings:
@@ -200,13 +230,6 @@ def render() -> None:
         ):
             for name, message in client_errors:
                 st.warning(f"{name}: {message}")
-
-    pending = sum(alert.explanation_status == "pending" for alert, _ in all_alerts)
-    if pending:
-        st.info(
-            f"Preparing {pending} news explanation(s). Alerts are ready; "
-            "click Refresh dashboard to see completed explanations."
-        )
 
     total_holdings = sum(len(client.holdings) for client in all_clients)
     total_clients = len(all_clients)

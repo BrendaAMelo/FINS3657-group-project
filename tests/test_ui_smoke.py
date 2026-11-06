@@ -64,7 +64,8 @@ def test_dashboard_loads_only_on_manual_refresh(monkeypatch):
     client = create_test_client()
     calls = []
 
-    def load(selected):
+    def load(selected, *, generate_explanations=False):
+        assert generate_explanations
         calls.append(selected.client_id)
         return [fake_alert(client_id=selected.client_id)]
 
@@ -110,7 +111,7 @@ def test_alerts_page_shows_metrics_and_cards(monkeypatch):
     monkeypatch.setattr(
         cached,
         "alerts_for",
-        lambda selected: [
+        lambda selected, **kwargs: [
             fake_alert("KO", client_id=selected.client_id),
         ],
     )
@@ -128,7 +129,7 @@ def test_alerts_page_handles_no_alerts(monkeypatch):
     monkeypatch.setattr(
         cached,
         "alerts_for",
-        lambda selected: [],
+        lambda selected, **kwargs: [],
     )
 
     at = run(alerts_page, client)
@@ -143,7 +144,7 @@ def test_alerts_page_handles_clients_without_holdings(monkeypatch):
 
     assert empty.holdings == ()
 
-    def should_not_run(selected):
+    def should_not_run(selected, **kwargs):
         pytest.fail("Alerts should not be generated without holdings")
 
     monkeypatch.setattr(cached, "alerts_for", should_not_run)
@@ -159,7 +160,7 @@ def test_alerts_page_handles_clients_without_holdings(monkeypatch):
 def test_alerts_page_shows_data_errors_politely(monkeypatch):
     create_test_client(ticker="KO")
 
-    def broken(selected):
+    def broken(selected, **kwargs):
         raise DataError("service down")
 
     monkeypatch.setattr(cached, "alerts_for", broken)
@@ -217,7 +218,7 @@ def test_alerts_page_shows_alerts_for_multiple_clients(monkeypatch):
         ticker="PG",
     )
 
-    def fake_alerts_for(selected):
+    def fake_alerts_for(selected, **kwargs):
         return [
             fake_alert(
                 ticker=selected.holdings[0].ticker,
@@ -275,7 +276,7 @@ def test_charts_page_reports_data_errors(monkeypatch):
 def test_incomplete_monitoring_is_not_reported_as_all_clear(monkeypatch):
     client = create_test_client()
 
-    def broken(selected):
+    def broken(selected, **kwargs):
         raise DataUnavailableError("missing history")
 
     monkeypatch.setattr(cached, "alerts_for", broken)
@@ -285,34 +286,59 @@ def test_incomplete_monitoring_is_not_reported_as_all_clear(monkeypatch):
     assert any("could not be completed" in item.value for item in at.warning)
 
 
-def test_pending_news_updates_only_after_manual_refresh(monkeypatch):
+@pytest.mark.parametrize("final_status", ["ok", "no_news", "unavailable"])
+def test_dashboard_waits_for_all_explanations_without_reprompting(monkeypatch, final_status):
     client = create_test_client()
+    ready = fake_alert(client_id=client.client_id)
     pending = replace(
-        fake_alert(client_id=client.client_id),
+        fake_alert(ticker="PG", client_id=client.client_id),
         explanation_status="pending",
         sources=(),
-        explanation="Preparing a news explanation automatically.",
+        explanation="Preparing a news explanation.",
         related_news=(Source("Related report", "https://example.com/related"),),
     )
-    current = [[pending]]
-    monkeypatch.setattr(cached, "alerts_for", lambda selected: current[0])
+    current = [[ready]]
+    requests = []
+
+    def load(selected, *, generate_explanations=False):
+        requests.append(generate_explanations)
+        return current[0]
+
+    monkeypatch.setattr(cached, "alerts_for", load)
     at = run(alerts_page, client)
     assert not at.exception
-    assert any("click Refresh dashboard" in item.value for item in at.info)
-    assert any("Related report" in item.value for item in at.markdown)
-    current[0] = [fake_alert(client_id=client.client_id)]
-    at.run()
-    assert not at.exception
-    assert not any("Revenue was" in item.value for item in at.markdown)
+    assert at.metric  # Previously displayed results must also disappear during a new batch.
+
+    current[0] = [ready, pending]
     at.button[0].click().run()
     assert not at.exception
+    assert requests.count(True) == 2
+    assert at.button[0].disabled
+    assert not at.metric and not at.selectbox and not at.text_input
+    assert not any("Revenue was" in item.value or "Related report" in item.value for item in at.markdown)
+    assert any("1 remaining" in item.value for item in at.info)
+
+    at.run()  # A progress check reads existing work without requesting generation.
+    assert not at.exception
+    assert requests.count(True) == 2
+    assert not at.metric
+
+    current[0] = [ready, replace(pending, explanation_status=final_status, explanation="Finished processing.")]
+    at.run()  # Completion reveals the full batch without another Refresh click.
+    assert not at.exception
+    assert requests.count(True) == 2
+    assert not at.button[0].disabled
+    assert at.metric
     assert any("Revenue was" in item.value for item in at.markdown)
-    assert not any("click Refresh dashboard" in item.value for item in at.info)
+    assert not any("remaining" in item.value for item in at.info)
+    completed_requests = list(requests)
+    at.run()
+    assert requests == completed_requests  # Polling stops when the batch has finished.
 
 
 def test_adding_holdings_requests_automatic_dashboard_navigation(monkeypatch):
     client = create_test_client(ticker=None)
-    monkeypatch.setattr(cached, "alerts_for", lambda selected: [])
+    monkeypatch.setattr(cached, "alerts_for", lambda selected, **kwargs: [])
     at = run(clients_page, client)
     at.multiselect[0].set_value(["AAPL", "MSFT", "NVDA"])
     next(button for button in at.button if button.label == "Add selected holdings").click().run()
@@ -323,11 +349,11 @@ def test_adding_holdings_requests_automatic_dashboard_navigation(monkeypatch):
 
 def test_full_app_consumes_dashboard_navigation_request(monkeypatch):
     create_test_client()
-    monkeypatch.setattr(cached, "alerts_for", lambda selected: [])
+    monkeypatch.setattr(cached, "alerts_for", lambda selected, **kwargs: [])
     at = AppTest.from_file("../app.py", default_timeout=TIMEOUT)
     at.session_state["open_alerts_after_holdings"] = True
     at.run()
     assert not at.exception
-    assert any(title.value == "Needs attention" for title in at.title)
+    assert any(title.value == "Anomaly Dashboard" for title in at.title)
     with pytest.raises(KeyError):
         _ = at.session_state["open_alerts_after_holdings"]

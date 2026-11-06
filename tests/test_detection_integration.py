@@ -90,7 +90,8 @@ def test_alerts_and_prefetch_share_real_flags_and_settings(monkeypatch):
         calls.append(args)
         return flags
 
-    def explain(ticker, day, summary):
+    def explain(ticker, day, summary, *, generate=False):
+        assert not generate
         explanations.append((ticker, day, summary))
         return Explanation("Not prepared.", "unavailable")
 

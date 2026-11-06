@@ -23,7 +23,7 @@ st.markdown(
 )
 
 pages = [
-    st.Page(alerts.render, title="Needs attention", icon=":material/notifications:", url_path="alerts", default=True),
+    st.Page(alerts.render, title="Dashboard", icon=":material/notifications:", url_path="alerts", default=True),
     st.Page(help_page.render, title="How it works", icon=":material/help:", url_path="help"),
     st.Page(clients.render, title="Clients", icon=":material/group:", url_path="clients"),
     st.Page(charts.render, title="Price charts", icon=":material/show_chart:", url_path="charts"),

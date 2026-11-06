@@ -7,7 +7,6 @@ the durable source of successful explanations. One worker limits provider load.
 from __future__ import annotations
 
 import logging
-import time
 from collections import OrderedDict
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass, replace
@@ -21,14 +20,12 @@ from services.contracts import Explanation
 log = logging.getLogger(__name__)
 _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="news-explanations")
 _lock = Lock()
-RETRY_SECONDS = 60
 MAX_FINISHED_JOBS = 256
 
 
 @dataclass
 class Job:
     future: Future[Explanation]
-    retry_at: float | None = None
 
 
 _jobs: OrderedDict[tuple, Job] = OrderedDict()
@@ -56,7 +53,8 @@ def _generate(ticker: str, day: date, summary: str) -> Explanation:
         return Explanation(explanation_service.UNAVAILABLE_TEXT, "unavailable")
 
 
-def explain(ticker: str, day: date, summary: str) -> Explanation:
+def explain(ticker: str, day: date, summary: str, *, generate: bool = False) -> Explanation:
+    """Read results by default; only an explicit refresh may queue missing work."""
     preview = explanation_service.explain(ticker, day, summary, generate=False)
     if preview.status != "pending":
         return preview  # A cache hit or insufficient news needs no provider request.
@@ -70,13 +68,13 @@ def explain(ticker: str, day: date, summary: str) -> Explanation:
             result = job.future.result()
             if result.status != "ok" and not result.related_news:
                 result = replace(result, related_news=preview.related_news)
-            if result.status != "unavailable":
-                return result
-            if job.retry_at is None:
-                job.retry_at = time.monotonic() + RETRY_SECONDS
-            if time.monotonic() < job.retry_at:
-                return result
-            del _jobs[key]
+            return result
+        if not generate:
+            return replace(
+                preview,
+                text="An explanation has not been requested. Click Refresh dashboard to prepare it.",
+                status="unavailable",
+            )
         # Keep active jobs even when the completed-result budget is exhausted.
         finished = [k for k, value in _jobs.items() if value.future.done()]
         for old_key in finished[: max(0, len(finished) - MAX_FINISHED_JOBS + 1)]:

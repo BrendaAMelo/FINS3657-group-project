@@ -3,6 +3,7 @@ from concurrent.futures import Future, ThreadPoolExecutor
 from datetime import UTC, date, datetime
 
 import pytest
+from streamlit.testing.v1 import AppTest
 
 import config
 from data.news import Article
@@ -58,13 +59,17 @@ def prepared(monkeypatch, tmp_path):
     return executor, calls
 
 
-def test_new_holdings_show_alerts_and_news_then_automatic_explanations(monkeypatch, prepared):
+def test_new_holdings_only_generate_explanations_on_explicit_refresh(monkeypatch, prepared):
     executor, calls = prepared
     client = clients.add_client("Automatic", "balanced")
     client = clients.add_holding(client.client_id, "KO")
     flag = detection.Flag("KO", DAY, "isolation_forest", 0.7, "high", SUMMARY)
     monkeypatch.setattr(detection, "get_flags", lambda *args: (flag,))
-    pending = cached.alerts_for(client)
+    idle = cached.alerts_for(client)
+    assert idle[0].explanation_status == "unavailable"
+    assert "Click Refresh dashboard" in idle[0].explanation
+    assert executor.tasks == [] and calls == []
+    pending = cached.alerts_for(client, generate_explanations=True)
     assert len(pending) == 1 and pending[0].explanation_status == "pending"
     assert pending[0].related_news[0].url == "https://example.com/news"
     assert pending[0].sources == ()  # Related news is not yet a causal citation.
@@ -83,42 +88,43 @@ def test_new_holdings_show_alerts_and_news_then_automatic_explanations(monkeypat
 def test_concurrent_clients_share_one_pending_job(prepared):
     executor, calls = prepared
     with ThreadPoolExecutor(max_workers=3) as requesters:
-        results = list(requesters.map(lambda _: jobs.explain("KO", DAY, SUMMARY), range(3)))
+        results = list(requesters.map(lambda _: jobs.explain("KO", DAY, SUMMARY, generate=True), range(3)))
     assert all(r.status == "pending" for r in results)
     assert len(executor.tasks) == 1 and calls == []
 
 
-def test_failed_jobs_have_cooldown_and_refresh_preserves_active_jobs(monkeypatch, prepared):
+def test_failed_jobs_only_retry_on_explicit_refresh(prepared):
     executor, _ = prepared
-    now = [0.0]
-    monkeypatch.setattr(jobs.time, "monotonic", lambda: now[0])
-    jobs.explain("KO", DAY, SUMMARY)
+    jobs.explain("KO", DAY, SUMMARY, generate=True)
     executor.tasks[0][0].set_result(Explanation("Unavailable.", "unavailable"))
-    assert jobs.explain("KO", DAY, SUMMARY).status == "unavailable"
-    now[0] = jobs.RETRY_SECONDS - 1
+    for _ in range(5):
+        assert jobs.explain("KO", DAY, SUMMARY).status == "unavailable"
+    assert len(executor.tasks) == 1
+    cached.clear_data()
+    # Clearing a failure alone must not make read-only views start another job.
     assert jobs.explain("KO", DAY, SUMMARY).status == "unavailable"
     assert len(executor.tasks) == 1
-    now[0] += 1
-    assert jobs.explain("KO", DAY, SUMMARY).status == "pending"
-    jobs.retry_failed()
-    jobs.explain("KO", DAY, SUMMARY)
+    assert jobs.explain("KO", DAY, SUMMARY, generate=True).status == "pending"
     assert len(executor.tasks) == 2
+    cached.clear_data()
+    assert jobs.explain("KO", DAY, SUMMARY, generate=True).status == "pending"
+    assert len(executor.tasks) == 2  # An active job is shared across refreshes.
     executor.tasks[1][0].set_result(Explanation("Unavailable.", "unavailable"))
-    jobs.retry_failed()
-    assert jobs.explain("KO", DAY, SUMMARY).status == "pending"
+    cached.clear_data()
+    assert jobs.explain("KO", DAY, SUMMARY, generate=True).status == "pending"
     assert len(executor.tasks) == 3
 
 
 def test_insufficient_news_does_not_schedule_generation(monkeypatch, prepared):
     executor, _ = prepared
     monkeypatch.setattr(explain.retrieval, "retrieve", lambda *args: Retrieved("KO", DAY, DAY, (), 0, False))
-    assert jobs.explain("KO", DAY, SUMMARY).status == "unavailable"
+    assert jobs.explain("KO", DAY, SUMMARY, generate=True).status == "unavailable"
     assert executor.tasks == []
 
 
 def test_worker_failure_becomes_fallback(monkeypatch, prepared):
     executor, _ = prepared
-    jobs.explain("KO", DAY, SUMMARY)
+    jobs.explain("KO", DAY, SUMMARY, generate=True)
 
     def broken(*args, **kwargs):
         raise RuntimeError("Unexpected provider failure")
@@ -126,3 +132,48 @@ def test_worker_failure_becomes_fallback(monkeypatch, prepared):
     monkeypatch.setattr(explain, "explain", broken)
     executor.finish()
     assert executor.tasks[0][0].result().status == "unavailable"
+
+
+def test_ui_only_schedules_ai_from_dashboard_refresh(monkeypatch, prepared):
+    executor, calls = prepared
+    client = clients.add_client("Manual refresh", "balanced")
+    clients.add_holding(client.client_id, "KO")
+    flag = detection.Flag("KO", DAY, "isolation_forest", 0.7, "high", SUMMARY)
+    monkeypatch.setattr(detection, "get_flags", lambda *args: (flag,))
+
+    def clients_page():
+        from ui.views import clients
+
+        clients.render()
+
+    def alerts_page():
+        from ui.views import alerts
+
+        alerts.render()
+
+    manage = AppTest.from_function(clients_page, default_timeout=15).run()
+    manage.run()
+    assert not manage.exception
+    assert executor.tasks == [] and calls == []
+
+    dashboard = AppTest.from_function(alerts_page, default_timeout=15).run()
+    assert not dashboard.exception
+    assert executor.tasks == []
+    dashboard.button[0].click().run()
+    assert not dashboard.exception
+    assert len(executor.tasks) == 1
+
+    assert not dashboard.metric and not dashboard.text_input
+    assert dashboard.button[0].disabled
+    dashboard.run()
+    manage.run()
+    assert not dashboard.exception and not manage.exception
+    assert len(executor.tasks) == 1 and calls == []
+
+    executor.finish()
+    dashboard.run()
+    assert not dashboard.exception
+    assert dashboard.metric
+    assert not dashboard.button[0].disabled
+    assert any("Coca-Cola reported quarterly results" in item.value for item in dashboard.markdown)
+    assert len(executor.tasks) == 1 and len(calls) == 1
