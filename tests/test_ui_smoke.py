@@ -354,6 +354,6 @@ def test_full_app_consumes_dashboard_navigation_request(monkeypatch):
     at.session_state["open_alerts_after_holdings"] = True
     at.run()
     assert not at.exception
-    assert any(title.value == "Needs attention" for title in at.title)
+    assert any(title.value == "Anomaly Dashboard" for title in at.title)
     with pytest.raises(KeyError):
         _ = at.session_state["open_alerts_after_holdings"]
