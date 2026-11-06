@@ -157,8 +157,7 @@ def _wait_for_explanations() -> None:
         # A full rerun removes this polling fragment and reveals the finished snapshot.
         st.rerun()
     st.info(
-        f"Preparing news explanations — {pending} remaining. "
-        "Results will appear together when processing finishes."
+        f"Preparing news explanations — {pending} remaining. Results will appear together when processing finishes."
     )
     st.progress((len(all_alerts) - pending) / max(len(all_alerts), 1))
 
