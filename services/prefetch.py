@@ -1,17 +1,19 @@
-"""Generate and cache explanations ahead of time: python -m services.prefetch --events
+"""Optional cache warming; the app also generates missing explanations automatically.
 
-Prefetched explanations make the demo independent of the model and the network. Stage E will
-call prefetch() with the real alerts for the demo clients.
+Use --alerts for current clients or --tickers for a prepared demo pool.
 """
 
 from __future__ import annotations
 
+import argparse
 import sys
 from collections.abc import Iterable
 from datetime import date
 
+import config
 from data.errors import DataError
 from data.events import load_events
+from services import clients, detection
 from services.explain import explain
 
 STANDARD_SUMMARY = "Price and volume moved unusually compared with this stock's own history."
@@ -31,12 +33,44 @@ def event_pairs() -> list[tuple[str, date, str]]:
     return [(e.ticker, e.first_trading_day.date(), STANDARD_SUMMARY) for e in events.itertuples()]
 
 
+def alert_pairs() -> list[tuple[str, date, str]]:
+    pairs = set()
+    for client in clients.list_clients():
+        for holding in client.holdings:
+            for flag in detection.get_flags(holding.ticker, client.profile, client.sensitivity_override):
+                pairs.add((flag.ticker, flag.day, flag.summary))
+    return sorted(pairs)
+
+
+def ticker_pairs(tickers: list[str], profiles: list[str]) -> list[tuple[str, date, str]]:
+    return sorted(
+        {
+            (flag.ticker, flag.day, flag.summary)
+            for ticker in tickers
+            for profile in profiles
+            for flag in detection.get_flags(ticker, profile)
+        }
+    )
+
+
 def main(argv: list[str]) -> int:
-    if "--events" not in argv:
-        print("Usage: python -m services.prefetch --events")
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument("--events", action="store_true", help="Legacy labelled-event examples")
+    modes.add_argument("--alerts", action="store_true", help="Actual flags for existing client holdings/settings")
+    modes.add_argument("--tickers", nargs="+", choices=config.SUPPORTED_TICKERS, help="Actual flags for these stocks")
+    parser.add_argument("--profiles", nargs="+", choices=tuple(config.PROFILES), default=list(config.PROFILES))
+    if not argv:
+        parser.print_usage()
         return 2
+    args = parser.parse_args(argv)
     try:
-        counts = prefetch(event_pairs())
+        pairs = (
+            event_pairs()
+            if args.events
+            else (alert_pairs() if args.alerts else ticker_pairs(args.tickers, args.profiles))
+        )
+        counts = prefetch(pairs)
     except DataError as err:
         print(err)
         return 1

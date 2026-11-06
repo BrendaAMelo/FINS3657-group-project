@@ -1,0 +1,11 @@
+{
+  "ticker": "JNJ",
+  "date": "2026-08-18",
+  "summary": "JNJ closed +3.33% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "No clear news found for this move.",
+  "status": "no_news",
+  "sources": [],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T02:41:45+00:00"
+}

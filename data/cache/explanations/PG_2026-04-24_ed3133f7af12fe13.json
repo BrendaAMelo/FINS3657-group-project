@@ -1,0 +1,22 @@
+{
+  "ticker": "PG",
+  "date": "2026-04-24",
+  "summary": "PG closed +2.46% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Procter & Gamble beat estimates across the board and topped estimates on beauty products demand, driven by increased demand for pricier hair and skin care products.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "P&G tops estimates on beauty products demand, flags hit from higher input cost",
+      "url": "https://finnhub.io/api/news?id=1dbbb7f47717a2c3ca0c3464e008b04c6e1a2b0ec8ae0ba990be73350f51cb61",
+      "published": "2026-04-24"
+    },
+    {
+      "title": "Tide maker P&G beats earnings estimates as Iran war drives up costs",
+      "url": "https://finnhub.io/api/news?id=d3a092f584fca0b6911cf7862738508443d6fdba6e3b5058c61eed8c13e7ae20",
+      "published": "2026-04-24"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:48+00:00"
+}

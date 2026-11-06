@@ -1,0 +1,32 @@
+{
+  "ticker": "KO",
+  "date": "2026-07-28",
+  "summary": "KO closed +5.00% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Coca-Cola reported second-quarter earnings and revenue that beat analyst estimates and raised its full-year guidance, with the CEO noting that the World Cup boosted its brands and demand rose across all markets.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Coca-Cola hikes full-year forecast. CEO tells CNBC the World Cup boosted its brands",
+      "url": "https://finnhub.io/api/news?id=4125e421019301cbb8cda2b84c87087e6108a4f596943f9bf3dbd83d30c4ed40",
+      "published": "2026-07-28"
+    },
+    {
+      "title": "Coca-Cola Q2 Adj. EPS $0.97 Beats $0.93 Estimate, Sales $13.400B Beat $13.162B Estimate",
+      "url": "https://finnhub.io/api/news?id=e62d419c41c4206d558df2880f605757d17146b606ee24112857e9ba12108659",
+      "published": "2026-07-28"
+    },
+    {
+      "title": "Coca-Cola Raises FY2026 Adj EPS Guidance from $3.24-$3.27 to $3.27-$3.30 vs $3.27 Est",
+      "url": "https://finnhub.io/api/news?id=03015c5d9ff740368a2f65cad9feb038f7895f2536d7d367f4cd0b1d5a8edadf",
+      "published": "2026-07-28"
+    },
+    {
+      "title": "Coca-Cola Reports Second Quarter 2026 Results and Raises Full Year Guidance",
+      "url": "https://finnhub.io/api/news?id=4b918dd7316173e94a61f6fcbd0421df26c35348c6190a447b11315b0dbe866c",
+      "published": "2026-07-28"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:44+00:00"
+}

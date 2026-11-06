@@ -1,39 +1,36 @@
-# Alert generation. DUMMY VERSION. Keep the signature and return type tho.
+"""Build real alerts for client holdings; explanations never determine detection."""
+
 from __future__ import annotations
 
-from datetime import date
-
-from services import clients
-from services.contracts import Alert, Source
+from services import clients, detection
+from services.contracts import Alert
+from services.explanation_jobs import explain
 
 _SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
 
 def get_alerts(client_id: int) -> list[Alert]:
-    # Return alerts for a client's holdings, ranked most severe first.
-
-    # Raises InputError if the client doesn't exist.
     client = clients.get_client(client_id)
-    severities = ["high", "medium", "low"]
-    fake: list[Alert] = []
-    for i, holding in enumerate(client.holdings[:3]):
-        has_news = i != 2
-        fake.append(
-            Alert(
-                client_id=client_id,
-                ticker=holding.ticker,
-                alert_date=date.today(),
-                severity=severities[i],
-                detector="dummy",
-                score=round(0.9 - 0.2 * i, 2),
-                summary=f"[FAKE] {holding.ticker} moved more than usual compared with its own history.",
-                explanation=(
-                    "[FAKE] Example explanation based on retrieved articles."
-                    if has_news
-                    else "No clear news found for this move."
-                ),
-                explanation_status="ok" if has_news else "no_news",
-                sources=(Source(title="Example source", url="https://example.com"),) if has_news else (),
+    alerts = []
+    for holding in client.holdings:
+        for flag in detection.get_flags(holding.ticker, client.profile, client.sensitivity_override):
+            explanation = explain(flag.ticker, flag.day, flag.summary)
+            alerts.append(
+                Alert(
+                    client_id=client_id,
+                    ticker=flag.ticker,
+                    alert_date=flag.day,
+                    severity=flag.severity,
+                    detector=flag.detector,
+                    score=flag.score,
+                    summary=flag.summary,
+                    explanation=explanation.text,
+                    explanation_status=explanation.status,
+                    sources=explanation.sources,
+                    related_news=explanation.related_news,
+                    # The monitoring window, severity heuristic and overrides are
+                    # not an independently validated deployment configuration.
+                    validated=False,
+                )
             )
-        )
-    return sorted(fake, key=lambda a: (_SEVERITY_ORDER[a.severity], -a.score))
+    return sorted(alerts, key=lambda a: (_SEVERITY_ORDER[a.severity], -a.score, -a.alert_date.toordinal(), a.ticker))

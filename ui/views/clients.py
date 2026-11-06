@@ -174,6 +174,11 @@ def _holdings_section(client: Client) -> None:
                 st.write(f"- **{ticker or '(blank)'}**: {reason}")
 
         if added:
+            message = f"Added {len(added)} holding(s). Checking alerts and preparing news explanations automatically."
+            if skipped:
+                message += " Skipped: " + "; ".join(f"{ticker}: {reason}" for ticker, reason in skipped)
+            flash(message, kind="warning" if skipped else "success")
+            st.session_state["open_alerts_after_holdings"] = True
             st.rerun()
 
 

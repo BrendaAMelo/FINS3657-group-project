@@ -36,7 +36,7 @@ event window; events must instead fall within the downloaded ten-year interval.
 `first_trading_day` is authoritative. The script does not substitute the announcement
 date, move a holiday to another day, or give credit for a next-day alert. Weekend
 dates are rejected. A weekday without a price row is reported as unscored.
-The standalone `data/events.py` and `tests/test_events.py` are unchanged.
+The Stage D event loader uses the configured spreadsheet export and also treats shared story IDs as metadata.
 
 ## Yahoo Finance history and training
 
@@ -190,4 +190,7 @@ python -m pytest models/tests tests -q
 
 `--tickers KO AAPL` limits stocks; listed events for other stocks are explicitly
 unscored. The old `--match-days` option is removed: matching is always exact-day.
-The models do not replace the dashboard's dummy alert service or create news explanations.
+The dashboard uses `services/detection.py` to run Isolation Forest over its fixed monitoring window.
+`services/alerts.py` attaches prepared Stage D explanations; `services/history.py` uses the same flags for charts.
+The dashboard includes unlabelled flagged days, rather than only hits exported to `results/detected_events.json`.
+Its monitoring cutoff differs from this event evaluation; see the root README for the exact windows.

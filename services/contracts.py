@@ -8,7 +8,7 @@ from typing import Literal
 
 Profile = Literal["conservative", "balanced", "aggressive"]
 Severity = Literal["high", "medium", "low"]
-ExplanationStatus = Literal["ok", "no_news", "unavailable"]
+ExplanationStatus = Literal["ok", "no_news", "unavailable", "pending"]
 
 
 class InputError(ValueError):
@@ -27,6 +27,7 @@ class Explanation:
     text: str
     status: ExplanationStatus
     sources: tuple[Source, ...] = ()
+    related_news: tuple[Source, ...] = ()  # Relevant articles, not necessarily evidence of a cause.
 
 
 @dataclass(frozen=True)
@@ -41,7 +42,8 @@ class Alert:
     explanation: str  # news-based explanation, or a "no clear news found" message
     explanation_status: ExplanationStatus
     sources: tuple[Source, ...] = ()
-    validated: bool = True  # False for tickers outside the evaluated pool (experimental mode)
+    validated: bool = True  # False when the monitoring configuration lacks independent evaluation
+    related_news: tuple[Source, ...] = ()
 
 
 @dataclass(frozen=True)

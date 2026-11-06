@@ -1,0 +1,488 @@
+{
+  "mode": "selected_event_recall",
+  "events_source": "/Users/brendamelo/FINS3657-group-project/data/FINS3657 - Events.xlsx - newData.csv",
+  "requested_history_start": "2016-11-04",
+  "as_of": "2026-11-04",
+  "history": {
+    "AAPL": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "AAPL",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:36.580378+00:00"
+    },
+    "BA": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "BA",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:37.182297+00:00"
+    },
+    "DIS": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "DIS",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:37.735104+00:00"
+    },
+    "JNJ": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "JNJ",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:38.273805+00:00"
+    },
+    "JPM": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "JPM",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:38.710631+00:00"
+    },
+    "KO": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "KO",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:39.257134+00:00"
+    },
+    "META": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "META",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:39.660693+00:00"
+    },
+    "MSFT": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "MSFT",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:40.016094+00:00"
+    },
+    "NFLX": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "NFLX",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:40.677479+00:00"
+    },
+    "NVDA": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "NVDA",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:41.118642+00:00"
+    },
+    "PG": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "PG",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:41.548761+00:00"
+    },
+    "TSLA": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "TSLA",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:41.883975+00:00"
+    },
+    "V": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "V",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:42.383748+00:00"
+    },
+    "WMT": {
+      "source": "Yahoo Finance via yfinance; auto_adjust=True",
+      "ticker": "WMT",
+      "requested_start": "2016-11-04",
+      "requested_end": "2026-11-04",
+      "actual_start": "2016-11-04",
+      "actual_end": "2026-11-04",
+      "rows": 2513,
+      "retrieved_at": "2026-11-05T12:40:42.932339+00:00"
+    }
+  },
+  "scoring_start": "2025-11-20",
+  "ignored_event_columns": [
+    "shared_event_id"
+  ],
+  "matching": "same ticker, exact first_trading_day; market-wide events included",
+  "evaluation_unit": "listed event",
+  "alert_rate_definition": "all flagged stock-days / scored stock-days in the prediction period, by split",
+  "unlisted_days": "unlabelled; not negatives",
+  "split_cutoff": "2026-05-01",
+  "fixed_threshold": 0.05,
+  "zscore_window": 60,
+  "profiles": {
+    "conservative": {
+      "z_threshold": 2.5,
+      "iforest_quantile": 0.97
+    },
+    "balanced": {
+      "z_threshold": 3.0,
+      "iforest_quantile": 0.98
+    },
+    "aggressive": {
+      "z_threshold": 3.5,
+      "iforest_quantile": 0.99
+    }
+  },
+  "fitting": {
+    "AAPL": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.6294834914491338,
+        "balanced": 0.6551096140964175,
+        "aggressive": 0.7018160981555909
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "BA": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5628559241320668,
+        "balanced": 0.5851523863704,
+        "aggressive": 0.6457153402923457
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "DIS": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.592843989898863,
+        "balanced": 0.6413173150388788,
+        "aggressive": 0.7328610660657172
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "JNJ": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5591806261193292,
+        "balanced": 0.6126850369118721,
+        "aggressive": 0.6330013715283256
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "JPM": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5655701851558741,
+        "balanced": 0.6050270823599253,
+        "aggressive": 0.6939778941160708
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "KO": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5187677160897167,
+        "balanced": 0.5585771405071898,
+        "aggressive": 0.6010685933411306
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "META": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5721597245426839,
+        "balanced": 0.602502868907363,
+        "aggressive": 0.6759034120467422
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "MSFT": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5591731003620768,
+        "balanced": 0.5843707704650624,
+        "aggressive": 0.6484999662838267
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "NFLX": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.4957192658716413,
+        "balanced": 0.5188030384449235,
+        "aggressive": 0.6287916275994729
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "NVDA": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5940167023463279,
+        "balanced": 0.619625817205883,
+        "aggressive": 0.654552484430645
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "PG": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5533968649309412,
+        "balanced": 0.5897553152317835,
+        "aggressive": 0.6076303259756263
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "TSLA": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.6113821099434427,
+        "balanced": 0.6394532367492773,
+        "aggressive": 0.6871353778569713
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "V": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5629641272277532,
+        "balanced": 0.5782129149370624,
+        "aggressive": 0.6497923367155913
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    },
+    "WMT": {
+      "fit_start": "2016-12-06",
+      "fit_end": "2024-02-02",
+      "fit_rows": 1801,
+      "calibration_start": "2024-02-05",
+      "calibration_end": "2025-11-19",
+      "calibration_rows": 451,
+      "thresholds": {
+        "conservative": 0.5924265432978617,
+        "balanced": 0.6515390479931024,
+        "aggressive": 0.7070316182107386
+      },
+      "random_state": 42,
+      "n_estimators": 200,
+      "feature_columns": [
+        "ret",
+        "abs_ret",
+        "gap",
+        "vol_prior",
+        "vol_ratio"
+      ]
+    }
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "ticker": "KO",
+  "date": "2026-07-02",
+  "summary": "KO closed +3.51% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "The Coca-Cola Company and Marriott International announced a global beverage supply partnership covering nearly 10,000 hotels worldwide [3, 6, 7]. Additionally, Coca-Cola is reportedly seeking bankers for a $1 billion IPO for its India bottler unit, targeting a $10 billion valuation [1, 5].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Reported Earlier: 'Coca-Cola Said to Seek Bankers for $1 Billion India Bottler IPO' - Bloomberg",
+      "url": "https://finnhub.io/api/news?id=2803d5f3e4480974d49d55428e13f19536ff4f1db88c7060ec49255c9420000e",
+      "published": "2026-07-02"
+    },
+    {
+      "title": "Major hotel chain switches from Pepsi to Coke at 10,000 locations",
+      "url": "https://finnhub.io/api/news?id=9efec104818b42349b979d65957c6bad134161b72ed0abdab013d97e9fdbf182",
+      "published": "2026-07-02"
+    },
+    {
+      "title": "Coca-Cola Targets $10 Billion Valuation for India Unit",
+      "url": "https://finnhub.io/api/news?id=7053a151d0c8b00efea4cb96051e3133c57a7cfb769c3dfafede056bbaa66561",
+      "published": "2026-07-02"
+    },
+    {
+      "title": "Marriott and Coca-Cola announce global beverage partnership (MAR)",
+      "url": "https://finnhub.io/api/news?id=698bb10a92e16730738407e9394725bd8508e04b70b884a511ec7ede173c9425",
+      "published": "2026-07-01"
+    },
+    {
+      "title": "Coca Cola (KO) Signs Marriott Deal Covering Nearly 10,000 Hotels Worldwide",
+      "url": "https://finnhub.io/api/news?id=c5c143869268f62815764722d723fd38d3cb97d17a4cb7fa721bd887ee9952bc",
+      "published": "2026-07-01"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:41+00:00"
+}

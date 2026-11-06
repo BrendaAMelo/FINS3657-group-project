@@ -1,0 +1,17 @@
+{
+  "ticker": "PG",
+  "date": "2025-12-08",
+  "summary": "PG closed -3.56% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Procter & Gamble shares experienced losses contributing to a broader drop in the Dow index.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Dow falls 250 points on losses for Nike, Procter & Gamble shares",
+      "url": "https://finnhub.io/api/news?id=f1ebb5e0a3167551d9944f9abe6c381d60be6ecce49ac05bcd795a855a98e1dc",
+      "published": "2025-12-08"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:39+00:00"
+}

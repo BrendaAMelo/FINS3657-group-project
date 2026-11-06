@@ -1,0 +1,22 @@
+{
+  "ticker": "PEP",
+  "date": "2026-07-09",
+  "summary": "PEP closed -3.26% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "PepsiCo reported second-quarter results featuring a revenue beat alongside an earnings per share miss, which weighed on investor sentiment and caused the stock to trade lower [1, 6].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "PepsiCo\u2019s (NASDAQ:PEP) Q2 CY2026 Sales Beat Estimates",
+      "url": "https://finnhub.io/api/news?id=ac02de0bcc5e2571cdb919fc5ea87e4b83679f76829d927d0d0a19e65afe0e79",
+      "published": "2026-07-09"
+    },
+    {
+      "title": "Why PepsiCo (PEP) Stock Is Trading Lower Today",
+      "url": "https://finnhub.io/api/news?id=48e2f276597309371d0572fb29d0057ec67739572149fa29183646b451cf9235",
+      "published": "2026-07-09"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:53:30+00:00"
+}

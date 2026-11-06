@@ -1,0 +1,17 @@
+{
+  "ticker": "KO",
+  "date": "2026-07-16",
+  "summary": "KO closed +3.00% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "UBS maintained a Buy rating on Coca-Cola and raised its price target to $98.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "UBS Maintains Buy on Coca-Cola, Raises Price Target to $98",
+      "url": "https://finnhub.io/api/news?id=25ff8744582f689d5700dea4dfe9d7e8f665dd41a8df9b5a51cbcfb3206b1681",
+      "published": "2026-07-16"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:48:42+00:00"
+}

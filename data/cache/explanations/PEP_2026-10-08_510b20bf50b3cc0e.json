@@ -1,0 +1,22 @@
+{
+  "ticker": "PEP",
+  "date": "2026-10-08",
+  "summary": "PEP closed +3.73% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "PepsiCo reported better-than-expected third-quarter earnings and revenue estimates, alongside increased year-over-year sales and a beat on non-GAAP profit per share.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "PepsiCo (PEP) Tops Q3 Earnings and Revenue Estimates",
+      "url": "https://finnhub.io/api/news?id=f9b35dead8b6ee5599d9406be4972f346b7295edb1fdaac4e863286b81097cef",
+      "published": "2026-10-08"
+    },
+    {
+      "title": "PepsiCo\u2019s (NASDAQ:PEP) Q3 2026 Sales Beat Estimates",
+      "url": "https://finnhub.io/api/news?id=d4d7edfecce6b9bdf5628e604b9266c62bba4557dd69a282d0d4b74c47a6d300",
+      "published": "2026-10-08"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:38+00:00"
+}

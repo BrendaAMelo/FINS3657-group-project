@@ -1,0 +1,22 @@
+{
+  "ticker": "PEP",
+  "date": "2026-02-03",
+  "summary": "PEP closed +4.93% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "PepsiCo reported its Q4 CY2025 results, beating Wall Street's revenue and profit expectations with sales increasing year on year [1]. Additionally, the company delivered positive earnings and revenue surprises for the quarter ended December 2025 [2].",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "PepsiCo (NASDAQ:PEP) Exceeds Q4 CY2025 Expectations",
+      "url": "https://finnhub.io/api/news?id=dcec5777637c44f38f666d62b58be89500d6e342f98d261de33f6bfa7b4daed9",
+      "published": "2026-02-03"
+    },
+    {
+      "title": "PepsiCo (PEP) Tops Q4 Earnings and Revenue Estimates",
+      "url": "https://finnhub.io/api/news?id=dae296dcda6448f103e05d18fe1463580ee846b1023b632aaac47816d3e61265",
+      "published": "2026-02-03"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:00+00:00"
+}

@@ -67,7 +67,7 @@ def render() -> None:
         return
 
     ticker = st.selectbox("Holding", [h.ticker for h in client.holdings], format_func=formatting.ticker_option_label)
-    days = st.radio("Period", [60, 120, 250], index=1, horizontal=True, format_func=lambda d: f"{d} trading days")
+    days = st.radio("Period", [60, 120, 250, 500], index=1, horizontal=True, format_func=lambda d: f"{d} trading days")
     try:
         with st.spinner("Loading prices..."):
             view = cached.price_view_for(client, ticker, days)
@@ -82,7 +82,8 @@ def render() -> None:
     st.altair_chart(_chart(view, flags))
     st.caption(
         f"Settings: {client.profile.capitalize()} profile. Prices are split- and dividend-adjusted. "
-        "Marked days behaved unusually compared with this stock's own history."
+        "Markers use the same Isolation Forest flags as Needs attention. "
+        "Changing the chart period does not refit the model."
     )
     if flags.empty:
         st.success("No unusual days in this period for this client's settings.")

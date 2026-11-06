@@ -47,7 +47,7 @@ def summary_line(n_alerts: int, n_holdings: int) -> str:
 
 def explanation_kind(status: str) -> str:
     # How to show an explanation: plain text, an info box, or a warning.
-    return {"ok": "text", "no_news": "info"}.get(status, "warning")
+    return {"ok": "text", "no_news": "info", "pending": "info"}.get(status, "warning")
 
 
 def format_date(value: date) -> str:

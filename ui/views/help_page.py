@@ -33,11 +33,15 @@ def render() -> None:
 
     st.subheader("Limitations")
     st.markdown(
-        "- Only the stocks listed below are supported. Each was checked during development; "
-        "other stocks have not been evaluated.\n"
+        "- Only the stocks listed below are supported. Monitoring settings and severity labels are experimental.\n"
         f"- Prices and news are a fixed snapshot through "
         f"{formatting.format_date(config.PRICE_DATA_END)}. "
         "The dashboard does not represent live market monitoring.\n"
+        "- Isolation Forest is fitted and calibrated before monitoring begins. Baseline detectors remain "
+        "available through the evaluation command. Severity describes a score relative to its threshold, "
+        "not financial risk.\n"
+        "- News explanations load from cache or are generated automatically while alerts remain visible. "
+        "They may use articles from after the flagged day.\n"
         "- It will miss some real events and raise some false alarms.\n"
         "- It describes what happened. It does not predict prices or recommend trades.\n"
         "- Use nicknames, not real client details, in this demo."

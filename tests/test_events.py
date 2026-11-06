@@ -175,7 +175,7 @@ def test_duplicate_event_ids_are_rejected(tmp_path):
     assert "more than once" in str(exc.value)
 
 
-def test_shared_event_rows_must_share_a_trading_day(tmp_path):
+def test_shared_story_can_affect_stocks_on_different_trading_days(tmp_path):
     rows = [
         valid_row(event_id="E001", shared_event_id="MW01"),
         valid_row(
@@ -186,9 +186,13 @@ def test_shared_event_rows_must_share_a_trading_day(tmp_path):
             first_trading_day="2026-02-09",
         ),
     ]
-    with pytest.raises(DataQualityError) as exc:
-        ev.load_events(write_events(tmp_path, rows))
-    assert "MW01" in str(exc.value)
+    assert len(ev.load_events(write_events(tmp_path, rows))) == 2
+
+
+def test_configured_spreadsheet_export_is_found_and_valid():
+    events = ev.load_events()
+    assert not events.empty
+    assert config.EVENTS_CSV.name == "FINS3657 - Events.xlsx - newData.csv"
 
 
 def test_all_problems_are_reported_together(tmp_path):

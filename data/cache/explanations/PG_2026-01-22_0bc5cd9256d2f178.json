@@ -1,0 +1,27 @@
+{
+  "ticker": "PG",
+  "date": "2026-01-22",
+  "summary": "PG closed +2.65% versus the previous trading day. Isolation Forest flagged unusual price/volume features relative to its historical baseline.",
+  "text": "Procter & Gamble's stock rose as Wall Street shrugged off weak sales growth and recognized that the company topped estimates for its quarterly earnings. Additionally, share gains in Procter & Gamble helped drive broader gains in the Dow.",
+  "status": "ok",
+  "sources": [
+    {
+      "title": "Procter & Gamble earnings top estimates, but shrinking demand weighs on sales",
+      "url": "https://finnhub.io/api/news?id=4b1b259dea5f89980d8da80a58e4ab84b7083d89b47e2d87e9f8e095f783e8f9",
+      "published": "2026-01-22"
+    },
+    {
+      "title": "Dow up nearly 325 points on gains in shares of American Express, Procter & Gamble",
+      "url": "https://finnhub.io/api/news?id=e4530e3e90c779eaf63fad844997e816c5c5a8e1975e28d3c196d16697ceeb3b",
+      "published": "2026-01-22"
+    },
+    {
+      "title": "Procter & Gamble Stock Is Rising. Wall Street Is Shrugging Off Weak Sales Growth.",
+      "url": "https://finnhub.io/api/news?id=1ddd92574bfc5780b480bf6d760e3cda8721f9c6c40cca6a08f248a911fc3d13",
+      "published": "2026-01-22"
+    }
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "generated_at": "2026-11-06T01:49:40+00:00"
+}
