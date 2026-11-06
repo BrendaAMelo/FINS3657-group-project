@@ -169,6 +169,25 @@ def test_no_news_verdicts_are_cached_too(monkeypatch):
     assert len(prompts) == 1
 
 
+def test_cache_only_mode_never_calls_the_model_and_reuses_prepared_results(monkeypatch):
+    prompts = install(monkeypatch, outputs=(reply(),))
+    assert explain.explain("KO", DAY, SUMMARY, generate=False).status == "pending"
+    assert prompts == []
+    prepared = explain.explain("KO", DAY, SUMMARY)
+    assert explain.explain("KO", DAY, SUMMARY, generate=False) == prepared
+    assert len(prompts) == 1
+
+
+def test_cache_write_failure_does_not_discard_a_valid_explanation(monkeypatch):
+    install(monkeypatch, outputs=(reply(),))
+
+    def broken(*args):
+        raise OSError("read only")
+
+    monkeypatch.setattr(explain, "_write_cache", broken)
+    assert explain.explain("KO", DAY, SUMMARY).status == "ok"
+
+
 def test_a_corrupt_cache_file_is_ignored_and_rebuilt(monkeypatch):
     prompts = install(monkeypatch, outputs=(reply(),))
     explain.explain("KO", DAY, SUMMARY)

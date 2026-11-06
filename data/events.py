@@ -1,4 +1,4 @@
-# Load and validate the event list (events.csv), the answer key for evaluation.
+# Load and validate the configured event spreadsheet export.
 from __future__ import annotations
 
 from pathlib import Path
@@ -137,10 +137,7 @@ def _row_problems(df: pd.DataFrame) -> list[str]:
         found += _date_problems(row, window_start, window_end)
         problems.extend(f"{label}: {text}" for text in found)
 
-    shared = df[df["shared_event_id"] != ""]
-    for shared_id, group in shared.groupby("shared_event_id"):
-        if group["first_trading_day"].nunique() > 1:
-            problems.append(f"{shared_id}: rows sharing this id have different first_trading_day values")
+    # Shared story IDs are metadata, as in Stage C; each row has its own authoritative date.
     return problems
 
 

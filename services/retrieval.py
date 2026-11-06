@@ -4,14 +4,15 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from datetime import date
-from functools import cache
+from functools import cache, lru_cache
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
 
 import config
 from data.fetch import load_prices
-from data.news import Article, load_snapshot
+from data.news import Article, Snapshot, load_snapshot
 
 EASTERN = ZoneInfo("America/New_York")
 MIN_RELEVANCE = 2
@@ -88,6 +89,13 @@ def deduplicate(articles: list[Article]) -> list[Article]:
     return [article for article, _ in kept]
 
 
+@lru_cache(maxsize=32)
+def _saved_snapshot(ticker: str, path: Path, modified: int) -> Snapshot:
+    # Parsing a compressed year of news for every flagged day is unnecessary.
+    # File identity/mtime keeps refreshes and isolated test snapshots separate.
+    return load_snapshot(ticker)
+
+
 def retrieve(ticker: str, flag_date: date, start: date | None = None) -> Retrieved:
     # Relevant, distinct, ranked articles around a flagged day.
 
@@ -98,8 +106,15 @@ def retrieve(ticker: str, flag_date: date, start: date | None = None) -> Retriev
     )
     if start is not None:
         window_start = start
-    snapshot = load_snapshot(ticker)
-    covered = snapshot.start <= window_start and window_end <= snapshot.end
+    path = config.NEWS_CACHE_DIR / f"{ticker}.json.gz"
+    snapshot = _saved_snapshot(ticker, path, path.stat().st_mtime_ns) if path.exists() else load_snapshot(ticker)
+    position = int(calendar.searchsorted(pd.Timestamp(flag_date)))
+    full_calendar_window = (
+        position < len(calendar)
+        and position + config.NEWS_AFTER_TRADING_DAYS < len(calendar)
+        and (start is not None or position >= config.NEWS_BEFORE_TRADING_DAYS)
+    )
+    covered = full_calendar_window and snapshot.start <= window_start and window_end <= snapshot.end
 
     scores: dict[str, int] = {}
     candidates: list[Article] = []

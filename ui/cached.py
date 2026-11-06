@@ -3,18 +3,14 @@ from __future__ import annotations
 
 import streamlit as st
 
-from services import alerts, history
+from services import alerts, explanation_jobs, history
 from services.contracts import Alert, Client
 
 
-@st.cache_data(ttl=900, show_spinner=False)
-def _alerts(client_id: int, holdings: tuple[str, ...], profile: str, override: float | None) -> list[Alert]:
-    return alerts.get_alerts(client_id)
-
-
 def alerts_for(client: Client) -> list[Alert]:
-    holdings = tuple(h.ticker for h in client.holdings)
-    return _alerts(client.client_id, holdings, client.profile, client.sensitivity_override)
+    # Detection and explanations have their own caches. Do not freeze pending
+    # job statuses in Streamlit's 15-minute page-data cache.
+    return alerts.get_alerts(client.client_id)
 
 
 @st.cache_data(ttl=900, show_spinner=False)
@@ -24,3 +20,9 @@ def _price_view(client_id: int, ticker: str, profile: str, override: float | Non
 
 def price_view_for(client: Client, ticker: str, days: int) -> history.PriceView:
     return _price_view(client.client_id, ticker, client.profile, client.sensitivity_override, days)
+
+
+def clear_data() -> None:
+    """Reload charts and retry failed explanations; active jobs remain shared."""
+    explanation_jobs.retry_failed()
+    _price_view.clear()

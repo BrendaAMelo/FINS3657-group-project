@@ -127,3 +127,8 @@ def test_start_override_widens_the_window():
 def test_missing_snapshot_raises():
     with pytest.raises(DataUnavailableError):
         retrieval.retrieve("KO", FLAG)
+
+
+def test_clipped_followup_window_is_not_complete_coverage():
+    save([art(1, "Coca-Cola raises outlook", published="2026-10-30T15:00:00+00:00")])
+    assert not retrieval.retrieve("KO", date(2026, 10, 30)).covered

@@ -100,8 +100,13 @@ def _render_alert(
             for source in alert.sources:
                 st.markdown("- " + formatting.source_markdown(source))
 
+        if alert.related_news and alert.explanation_status != "ok":
+            st.caption("Related news — these articles do not necessarily explain the move")
+            for source in alert.related_news:
+                st.markdown("- " + formatting.source_markdown(source))
+
         if not alert.validated:
-            st.caption("Experimental: this ticker has not been evaluated.")
+            st.caption("Experimental configuration: severity and sensitivity settings are not validated risk measures.")
 
         review_key = f"review_{alert.client_id}_{alert.ticker}_{alert.alert_date.isoformat()}_{alert.detector}"
 
@@ -122,6 +127,7 @@ def _render_alert(
             st.write(f"Detector: {alert.detector} · Score: {alert.score:.2f}")
 
 
+@st.fragment(run_every="2s")
 def render() -> None:
     st.title("Needs attention")
     disclaimer()
@@ -139,6 +145,12 @@ def render() -> None:
     )
 
     st.caption(f"Market-data snapshot through {formatting.format_date(config.PRICE_DATA_END)}.")
+    st.caption(
+        "Isolation Forest alerts across the historical monitoring period. News explanations are retrospective "
+        "and can include articles published after the flagged day. Missing explanations do not invalidate alerts."
+    )
+    if st.button("Refresh and retry unavailable explanations"):
+        cached.clear_data()
 
     all_alerts: list[tuple[Alert, str]] = []
     client_errors: list[tuple[str, str]] = []
@@ -164,6 +176,10 @@ def render() -> None:
         ):
             for name, message in client_errors:
                 st.warning(f"{name}: {message}")
+
+    pending = sum(alert.explanation_status == "pending" for alert, _ in all_alerts)
+    if pending:
+        st.info(f"Preparing {pending} news explanation(s). Alerts are ready; explanations update automatically.")
 
     if not any(client.holdings for client in all_clients):
         st.info("No clients have holdings yet. Add holdings on the Clients page.")
@@ -255,6 +271,8 @@ def render() -> None:
     if not filtered:
         if all_alerts:
             st.success("No warnings match those filters.")
+        elif client_errors:
+            st.warning("Monitoring could not be completed for some clients. Check the data issues above.")
         else:
             st.success("Nothing unusual to review across the current holdings.")
         return

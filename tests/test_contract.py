@@ -11,11 +11,12 @@ import pytest
 
 import config
 from services import alerts, clients
-from services.contracts import Alert, InputError
+from services.contracts import Alert, Explanation, InputError
+from services.detection import Flag
 
 SEVERITIES = {"high", "medium", "low"}
 SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
-EXPLANATION_STATUSES = {"ok", "no_news", "unavailable"}
+EXPLANATION_STATUSES = {"ok", "no_news", "unavailable", "pending"}
 FORBIDDEN_ADVICE = re.compile(
     r"\b(you should (buy|sell|hold)|buy now|sell now|we recommend (buying|selling)|"
     r"(buy|sell) (more|this|the stock))\b",
@@ -220,12 +221,13 @@ def test_alerts_are_ranked_by_severity_then_score():
         assert keys == sorted(keys)
 
 
-def test_alerts_only_cover_the_clients_holdings_once_each():
+def test_alerts_only_cover_holdings_without_duplicate_ticker_day_detector():
     for c in clients.list_clients():
         held = {h.ticker for h in c.holdings}
-        tickers = [a.ticker for a in alerts.get_alerts(c.client_id)]
-        assert set(tickers) <= held
-        assert len(tickers) == len(set(tickers))
+        result = alerts.get_alerts(c.client_id)
+        assert {a.ticker for a in result} <= held
+        identities = [(a.ticker, a.alert_date, a.detector) for a in result]
+        assert len(identities) == len(set(identities))
 
 
 def test_alert_tickers_belong_to_the_supported_pool():
@@ -273,9 +275,15 @@ def test_each_call_returns_a_fresh_list():
     assert first == second
 
 
-def test_alerts_are_immutable():
+def test_alerts_are_immutable(monkeypatch):
     client = clients.add_client("Alert test", "balanced")
     clients.add_holding(client.client_id, "KO")
+    monkeypatch.setattr(
+        alerts.detection,
+        "get_flags",
+        lambda *args: (Flag("KO", date(2026, 3, 12), "isolation_forest", 0.7, "high", "Unusual features."),),
+    )
+    monkeypatch.setattr(alerts, "explain", lambda *args, **kwargs: Explanation("Unavailable.", "unavailable"))
 
     result = alerts.get_alerts(client.client_id)
     assert result

@@ -14,7 +14,7 @@ load_dotenv(ROOT / ".env")  # does nothing if .env doesn't exist
 DATA_DIR = ROOT / "data"
 PRICE_CACHE_DIR = DATA_DIR / "cache" / "prices"
 NEWS_CACHE_DIR = DATA_DIR / "cache" / "news"
-EVENTS_CSV = DATA_DIR / "events.csv"
+EVENTS_CSV = DATA_DIR / "FINS3657 - Events.xlsx - newData.csv"
 DB_PATH = DATA_DIR / "app.db"
 RESULTS_DIR = ROOT / "results"
 
@@ -24,7 +24,7 @@ EVENT_WINDOW_START = date(2025, 11, 1)
 EVENT_WINDOW_END = date(2026, 10, 27)
 SPLIT_CUTOFF = date(2026, 5, 1)  # first_trading_day < cutoff -> dev; >= cutoff -> test
 MIN_HISTORY_DAYS = 500  # roughly two years of trading days
-EVENT_MATCH_DAYS = 1  # a flag within first trading day + 1 day counts as a hit
+EVENT_MATCH_DAYS = 0  # Stage C matches only the exact first trading day.
 
 # Price data
 PRICE_DATA_END = date(2026, 10, 30)  # last trading day in the cached snapshot
@@ -87,7 +87,12 @@ TICKERS_BY_TIER: dict[str, tuple[str, ...]] = {
 FIXED_THRESHOLD_PCT = 0.05  # baseline 1: flag if |daily return| > 5%
 ZSCORE_WINDOW = 60  # baseline 2: rolling window in trading days
 
-# Risk profiles -> sensitivity. PLACEHOLDER VALUES!!!!
+# Dashboard uses a fixed ten-year Stage C history pool and the prepared news period.
+MODEL_HISTORY_AS_OF = date(2026, 11, 4)
+MONITORING_START = EVENT_WINDOW_START
+MONITORING_END = PRICE_DATA_END
+
+# Initial sensitivity settings, not validated optimal thresholds.
 # Lower z_threshold / lower quantile = more alerts (more sensitive).
 PROFILES: dict[str, dict[str, float]] = {
     "conservative": {"z_threshold": 2.5, "iforest_quantile": 0.97},
@@ -167,7 +172,7 @@ EXPLANATION_CACHE_DIR = DATA_DIR / "cache" / "explanations"
 
 # Interface
 # Per-client sensitivity override. Same scale as PROFILES["z_threshold"] (lower = more alerts).
-# Change these to match how Stage C applies sensitivity_override.
+# Forest overrides map this scale to calibration quantiles; see services/detection.py.
 OVERRIDE_MIN = 2.0
 OVERRIDE_MAX = 4.0
 OVERRIDE_STEP = 0.1

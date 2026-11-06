@@ -1,70 +1,61 @@
-"""import pandas as pd
 import pytest
 
-from services import clients, history
+from services import clients, detection, history
 from services.contracts import InputError
 
 
 @pytest.fixture
 def setup(monkeypatch, make_prices):
     prices = make_prices(n=300)
+    flags = (
+        detection.Flag("KO", prices.index[-5].date(), "isolation_forest", 0.7, "high", "Unusual features."),
+        detection.Flag("KO", prices.index[-200].date(), "isolation_forest", 0.6, "low", "Older flag."),
+    )
     calls = []
-    monkeypatch.setattr(history, "load_prices", lambda ticker, validate=False: prices)
 
-    def fake_flags(ticker, profile, start, end, sensitivity_override=None):
-        calls.append((ticker, profile, start, end, sensitivity_override))
-        return pd.DataFrame(
-            {
-                "date": [prices.index[-5], prices.index[-20], pd.Timestamp("2000-01-03")],
-                "detector": ["isolation_forest", "z_score", "isolation_forest"],
-                "score": [0.9, 0.5, 0.7],
-                "severity": ["high", "low", "medium"],
-                "summary": ["a", "b", "c"],
-            }
-        )
+    def snapshot(*args):
+        calls.append(args)
+        return prices, flags
 
-    monkeypatch.setattr(history, "get_flags", fake_flags)
+    monkeypatch.setattr(detection, "snapshot", snapshot)
     client = clients.add_client("Chart client", "aggressive")
     clients.add_holding(client.client_id, "KO")
     clients.set_sensitivity_override(client.client_id, 3.2)
-    return prices, calls, client
+    return prices, flags, calls, client
 
 
-def test_view_has_prices_and_only_primary_detector_flags_on_trading_days(setup):
-    prices, _, client = setup
+def test_chart_uses_matching_flags_and_actual_closes(setup):
+    prices, flags, calls, client = setup
     view = history.price_view(client.client_id, "KO", days=100)
-    assert list(view.prices.columns) == ["Date", "Close"] and len(view.prices) == 100
-    assert [f.severity for f in view.flags] == ["high"]  # the 2000 date and z-score row are dropped
-    assert view.flags[0].close == pytest.approx(float(prices["Close"].iloc[-5]))
+    assert list(view.prices.columns) == ["Date", "Close"]
+    assert len(view.prices) == 100
+    assert [point.day for point in view.flags] == [flags[0].day]
+    assert view.flags[0].close == pytest.approx(float(prices.Close.iloc[-5]))
+    assert calls == [("KO", "aggressive", 3.2)]
 
 
-def test_the_clients_settings_are_passed_to_the_detector(setup):
-    _, calls, client = setup
-    history.price_view(client.client_id, "KO", days=100)
-    ticker, profile, _, _, override = calls[0]
-    assert (ticker, profile, override) == ("KO", "aggressive", 3.2)
+def test_wider_chart_keeps_older_flags_without_changing_detection(setup):
+    _, flags, calls, client = setup
+    view = history.price_view(client.client_id, "KO", days=250)
+    assert {point.day for point in view.flags} == {flag.day for flag in flags}
+    assert calls == [("KO", "aggressive", 3.2)]
 
 
-def test_all_flags_are_kept_when_the_primary_detector_is_absent(monkeypatch, setup):
-    prices, _, client = setup
-    only_z = pd.DataFrame(
-        {"date": [prices.index[-3]], "detector": ["z_score"], "score": [1.0], "severity": ["low"], "summary": ["z"]}
-    )
-    monkeypatch.setattr(history, "get_flags", lambda *a, **k: only_z)
-    assert len(history.price_view(client.client_id, "KO").flags) == 1
+def test_no_flags_still_returns_prices(monkeypatch, setup):
+    prices, _, _, client = setup
+    monkeypatch.setattr(detection, "snapshot", lambda *args: (prices, ()))
+    view = history.price_view(client.client_id, "KO")
+    assert view.flags == () and not view.prices.empty
 
 
-def test_no_flags_gives_an_empty_tuple(monkeypatch, setup):
-    _, _, client = setup
-    monkeypatch.setattr(history, "get_flags", lambda *a, **k: pd.DataFrame())
-    assert history.price_view(client.client_id, "KO").flags == ()
+def test_holdings_must_belong_to_client(setup):
+    _, _, _, client = setup
+    for client_id, ticker in [(client.client_id, "PG"), (client.client_id, "ZZZZ"), (10**9, "KO")]:
+        with pytest.raises(InputError):
+            history.price_view(client_id, ticker)
 
 
-def test_holdings_must_belong_to_the_client(setup):
-    _, _, client = setup
+@pytest.mark.parametrize("days", [0, -1, True, 1.5])
+def test_invalid_period_rejected(setup, days):
     with pytest.raises(InputError):
-        history.price_view(client.client_id, "PG")
-    with pytest.raises(InputError):
-        history.price_view(client.client_id, "ZZZZ")
-    with pytest.raises(InputError):
-        history.price_view(10**9, "KO")"""
+        history.price_view(setup[-1].client_id, "KO", days)

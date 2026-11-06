@@ -69,6 +69,7 @@ def isolation_forest(
     profiles: tuple[str, ...] = tuple(config.PROFILES),
     random_state: int = 42,
     allow_insufficient_history: bool = False,
+    quantile_override: float | None = None,
 ) -> tuple[dict[str, pd.DataFrame], dict]:
     """Fit per ticker on early history; calibrate quantiles on later pre-evaluation history."""
     _validate(prices)
@@ -99,7 +100,7 @@ def isolation_forest(
         scores.loc[future.index] = -forest.score_samples(future)
     outputs, thresholds = {}, {}
     for profile in profiles:
-        quantile = config.PROFILES[profile]["iforest_quantile"]
+        quantile = config.PROFILES[profile]["iforest_quantile"] if quantile_override is None else quantile_override
         if not 0 < quantile < 1:
             raise ValueError("Isolation Forest quantiles must be between zero and one.")
         threshold = float(np.quantile(calibration_scores, quantile))
